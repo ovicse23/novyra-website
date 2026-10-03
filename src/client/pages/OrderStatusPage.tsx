@@ -78,7 +78,7 @@ export const OrderStatusPage: React.FC = () => {
             <img
               src="/assets/logo.png"
               alt="Novyra"
-              className="h-8 w-auto object-contain"
+              className="h-9 sm:h-10 w-auto object-contain"
             />
           </a>
 

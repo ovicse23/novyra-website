@@ -175,31 +175,37 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 blur-3xl pointer-events-none rounded-full" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 blur-3xl pointer-events-none rounded-full" />
 
-        {/* Modal Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none"
-          aria-label="Close modal"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {/* Modal Top Header Bar: Stepper + Close Button (Never overlaps) */}
+        <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-800">
+          {step < 4 ? (
+            <div className="flex items-center gap-1.5 sm:gap-3 text-[11px] sm:text-xs font-bold text-slate-400 min-w-0 overflow-x-auto">
+              <span className={`shrink-0 ${step >= 1 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
+                1. Your Info
+              </span>
+              <span className="text-slate-600 shrink-0">→</span>
+              <span className={`shrink-0 ${step >= 2 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
+                2. Send ৳{price}
+              </span>
+              <span className="text-slate-600 shrink-0">→</span>
+              <span className={`shrink-0 ${step >= 3 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
+                3. Submit TxnID
+              </span>
+            </div>
+          ) : (
+            <div className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+              ✓ Order Verified
+            </div>
+          )}
 
-        {/* Progress Stepper */}
-        {step < 4 && (
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800 text-xs font-bold text-slate-400">
-            <span className={step >= 1 ? 'text-cyan-400 flex items-center gap-1' : ''}>
-              1. Your Info
-            </span>
-            <span className="text-slate-600">→</span>
-            <span className={step >= 2 ? 'text-cyan-400 flex items-center gap-1' : ''}>
-              2. Send ৳{price}
-            </span>
-            <span className="text-slate-600">→</span>
-            <span className={step >= 3 ? 'text-cyan-400 flex items-center gap-1' : ''}>
-              3. Submit TxnID
-            </span>
-          </div>
-        )}
+          {/* Close button with dedicated shrink-0 space */}
+          <button
+            onClick={onClose}
+            className="p-1.5 -mr-1 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none shrink-0"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
         {/* Error message alert */}
         {errorMessage && (

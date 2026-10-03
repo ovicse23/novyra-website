@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
             <img
               src="/assets/logo.png"
               alt="Novyra Logo"
-              className="h-10 w-auto object-contain"
+              className="h-11 sm:h-12 w-auto object-contain"
             />
           </div>
 

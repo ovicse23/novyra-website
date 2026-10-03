@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCheckout, price = 299 }) =
           <img
             src="/assets/logo.png"
             alt="Novyra — Learn. Build. Grow."
-            className="h-9 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </a>
 

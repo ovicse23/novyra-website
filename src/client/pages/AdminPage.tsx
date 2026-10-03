@@ -164,6 +164,9 @@ export const AdminPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="glass-card max-w-sm w-full p-8 rounded-2xl border-white/10 shadow-2xl text-center">
+          <a href="/" className="inline-block mb-6">
+            <img src="/assets/logo.png" alt="Novyra" className="h-10 w-auto mx-auto object-contain" />
+          </a>
           <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto mb-4 text-cyan-400">
             <Lock className="w-6 h-6" />
           </div>
@@ -207,7 +210,7 @@ export const AdminPage: React.FC = () => {
           <img
             src="/assets/logo.png"
             alt="Novyra Admin"
-            className="h-8 w-auto object-contain"
+            className="h-9 sm:h-10 w-auto object-contain"
           />
           <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold text-[10px] uppercase tracking-wider">
             Verification Portal
