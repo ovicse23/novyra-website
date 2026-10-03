@@ -6,10 +6,16 @@ declare global {
   }
 }
 
+function pushDataLayer(payload: Record<string, any>) {
+  if (typeof window === 'undefined') return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(payload);
+}
+
 export function initTracking(metaPixelId?: string, ga4MeasurementId?: string) {
   if (typeof window === 'undefined') return;
 
-  // Initialize GA4 if ID is present
+  // Initialize GA4 if ID is present and gtag is not already configured
   if (ga4MeasurementId && !window.gtag) {
     const script = document.createElement('script');
     script.async = true;
@@ -24,7 +30,7 @@ export function initTracking(metaPixelId?: string, ga4MeasurementId?: string) {
     window.gtag('config', ga4MeasurementId);
   }
 
-  // Initialize Meta Pixel if ID is present
+  // Initialize Meta Pixel if ID is present and fbq is not already set up
   if (metaPixelId && !window.fbq) {
     (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
       if (f.fbq) return;
@@ -52,6 +58,10 @@ export function trackPageView() {
   if (typeof window === 'undefined') return;
   window.fbq?.('track', 'PageView');
   window.gtag?.('event', 'page_view');
+  pushDataLayer({
+    event: 'page_view',
+    page_path: window.location.pathname,
+  });
 }
 
 export function trackViewContent(price = 299) {
@@ -79,6 +89,23 @@ export function trackViewContent(price = 299) {
       },
     ],
   });
+
+  // GTM dataLayer
+  pushDataLayer({
+    event: 'view_item',
+    ecommerce: {
+      currency: 'BDT',
+      value: price,
+      items: [
+        {
+          item_id: 'novyra-ai-client-hunting-toolkit',
+          item_name: 'AI Client Hunting + Freelancing Toolkit',
+          price: price,
+          quantity: 1,
+        },
+      ],
+    },
+  });
 }
 
 export function trackInitiateCheckout(price = 299) {
@@ -102,14 +129,39 @@ export function trackInitiateCheckout(price = 299) {
         item_id: 'novyra-ai-client-hunting-toolkit',
         item_name: 'AI Client Hunting + Freelancing Toolkit',
         price: price,
+        quantity: 1,
       },
     ],
+  });
+
+  // GTM dataLayer
+  pushDataLayer({
+    event: 'begin_checkout',
+    ecommerce: {
+      currency: 'BDT',
+      value: price,
+      items: [
+        {
+          item_id: 'novyra-ai-client-hunting-toolkit',
+          item_name: 'AI Client Hunting + Freelancing Toolkit',
+          price: price,
+          quantity: 1,
+        },
+      ],
+    },
   });
 }
 
 export function trackPaymentInstructionsViewed(method: 'bKash' | 'Rocket', orderId: string) {
   if (typeof window === 'undefined') return;
+
   window.gtag?.('event', 'payment_instructions_viewed', {
+    payment_method: method,
+    order_id: orderId,
+  });
+
+  pushDataLayer({
+    event: 'payment_instructions_viewed',
     payment_method: method,
     order_id: orderId,
   });
@@ -117,7 +169,14 @@ export function trackPaymentInstructionsViewed(method: 'bKash' | 'Rocket', order
 
 export function trackPaymentProofSubmitted(orderId: string, txnId: string) {
   if (typeof window === 'undefined') return;
+
   window.gtag?.('event', 'payment_proof_submitted', {
+    order_id: orderId,
+    transaction_id: txnId,
+  });
+
+  pushDataLayer({
+    event: 'payment_proof_submitted',
     order_id: orderId,
     transaction_id: txnId,
   });
@@ -155,11 +214,37 @@ export function trackPurchase(orderId: string, price = 299) {
       },
     ],
   });
+
+  // GTM dataLayer
+  pushDataLayer({
+    event: 'purchase',
+    ecommerce: {
+      transaction_id: orderId,
+      value: price,
+      currency: 'BDT',
+      items: [
+        {
+          item_id: 'novyra-ai-client-hunting-toolkit',
+          item_name: 'AI Client Hunting + Freelancing Toolkit',
+          price: price,
+          quantity: 1,
+        },
+      ],
+    },
+  });
 }
 
 export function trackFileDownload(orderId: string) {
   if (typeof window === 'undefined') return;
+
   window.gtag?.('event', 'file_download', {
+    file_name: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+    file_extension: 'pdf',
+    order_id: orderId,
+  });
+
+  pushDataLayer({
+    event: 'file_download',
     file_name: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
     file_extension: 'pdf',
     order_id: orderId,

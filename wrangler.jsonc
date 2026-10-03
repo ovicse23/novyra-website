@@ -48,7 +48,7 @@
     "ADMIN_PASSWORD": "admin-secret-novyra-2026",
     "TURNSTILE_SITE_KEY": "",
     "TURNSTILE_SECRET_KEY": "",
-    "META_PIXEL_ID": "",
+    "META_PIXEL_ID": "1484814433669413",
     "GA4_MEASUREMENT_ID": ""
   }
 }
