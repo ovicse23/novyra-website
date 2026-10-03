@@ -10,12 +10,12 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ onOpenCheckout, price = 
   const [selectedIdx, setSelectedIdx] = useState(0);
 
   const previews = [
-    { num: '01', title: 'System Architecture', file: '/assets/preview-01.svg', desc: 'The 6-channel client hunting flywheel' },
-    { num: '02', title: 'AI Client Research', file: '/assets/preview-02.svg', desc: 'Finding high-ticket decision makers' },
-    { num: '03', title: 'Upwork & Fiverr Mastery', file: '/assets/preview-03.svg', desc: 'Proposal templates that win replies' },
-    { num: '04', title: 'Cold Email Playbook', file: '/assets/preview-04.svg', desc: 'High-open subject lines & follow-ups' },
-    { num: '05', title: 'LinkedIn Outreach', file: '/assets/preview-05.svg', desc: 'Connecting without spamming' },
-    { num: '06', title: '30-Day Action Plan', file: '/assets/preview-06.svg', desc: 'Day-by-day execution checklist' },
+    { num: '01', page: '04', title: 'Operating System', file: '/assets/preview-01.svg', desc: 'Position, Prospect, Convert formula' },
+    { num: '02', page: '08', title: 'Ideal Client Profile', file: '/assets/preview-02.svg', desc: 'Company fit & lead-scoring matrix' },
+    { num: '03', page: '14', title: 'AI Prompt Pack', file: '/assets/preview-03.svg', desc: 'Trigger extraction & qualification' },
+    { num: '04', page: '17', title: 'Upwork Proposal', file: '/assets/preview-04.svg', desc: '5-part proposal blueprint & AI critic' },
+    { num: '05', page: '23', title: 'LinkedIn Outreach', file: '/assets/preview-05.svg', desc: '4-touch conversation sequence' },
+    { num: '06', page: '39', title: '30-Day Action Plan', file: '/assets/preview-06.svg', desc: 'Day-by-day execution calendar' },
   ];
 
   return (
@@ -46,7 +46,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ onOpenCheckout, price = 
                   : 'bg-slate-900/60 text-slate-400 hover:text-white border border-slate-800'
               }`}
             >
-              Page 0{p.num}: {p.title}
+              Page {p.page}: {p.title}
             </button>
           ))}
         </div>

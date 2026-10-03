@@ -75,10 +75,11 @@ export const OrderStatusPage: React.FC = () => {
       <header className="border-b border-white/10 glass-panel py-4">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-white text-sm">
-              N
-            </div>
-            <span className="font-extrabold text-lg tracking-wide text-white">NOVYRA</span>
+            <img
+              src="/assets/logo.png"
+              alt="Novyra"
+              className="h-8 w-auto object-contain"
+            />
           </a>
 
           <a

@@ -9,6 +9,16 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
+  "routes": [
+    {
+      "pattern": "novyrabd.com/*",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.novyrabd.com/*",
+      "custom_domain": true
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
@@ -27,8 +37,8 @@
     "enabled": true
   },
   "vars": {
-    "ENVIRONMENT": "development",
-    "SITE_URL": "http://localhost:3000",
+    "ENVIRONMENT": "production",
+    "SITE_URL": "https://novyrabd.com",
     "BKASH_NUMBER": "01638002708",
     "ROCKET_NUMBER": "016380027089",
     "PRODUCT_PRICE": "299",

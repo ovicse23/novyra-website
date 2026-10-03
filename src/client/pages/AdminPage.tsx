@@ -204,13 +204,14 @@ export const AdminPage: React.FC = () => {
       {/* Top Admin Header */}
       <header className="border-b border-white/10 bg-slate-950/80 sticky top-0 z-30 px-4 sm:px-8 py-4 backdrop-blur-md flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-white text-base">
-            N
-          </div>
-          <div>
-            <div className="font-black text-lg text-white">NOVYRA ADMIN</div>
-            <div className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">Manual Order Verification Portal</div>
-          </div>
+          <img
+            src="/assets/logo.png"
+            alt="Novyra Admin"
+            className="h-8 w-auto object-contain"
+          />
+          <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold text-[10px] uppercase tracking-wider">
+            Verification Portal
+          </span>
         </div>
 
         <div className="flex items-center gap-4">

@@ -12,15 +12,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCheckout, price = 299 }) =
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Novyra Home">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 p-[1.5px] transition-transform duration-300 group-hover:scale-105">
-            <div className="w-full h-full bg-[#0B1220] rounded-[10px] flex items-center justify-center">
-              <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 text-lg">N</span>
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-black text-xl tracking-wider text-white group-hover:text-cyan-400 transition-colors">NOVYRA</span>
-            <span className="text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Learn. Build. Grow.</span>
-          </div>
+          <img
+            src="/assets/logo.png"
+            alt="Novyra — Learn. Build. Grow."
+            className="h-9 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          />
         </a>
 
         {/* Desktop Navigation */}

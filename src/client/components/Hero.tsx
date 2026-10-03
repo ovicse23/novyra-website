@@ -115,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <div className="relative group w-56 sm:w-64">
                   {/* Book 3D Styling */}
                   <div className="relative rounded-r-xl rounded-l-sm bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 p-6 border-y-2 border-r-2 border-l-8 border-cyan-500/50 shadow-2xl shadow-cyan-500/10 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                    <div className="text-[10px] font-bold text-cyan-400 tracking-widest uppercase mb-4">NOVYRA SYSTEM</div>
+                    <img src="/assets/logo.png" alt="Novyra" className="h-6 w-auto object-contain mb-4" />
                     <div className="text-xl font-black text-white leading-tight mb-2">AI CLIENT HUNTING</div>
                     <div className="text-xs text-slate-300 font-medium mb-8">+ Freelancing Toolkit</div>
                     
