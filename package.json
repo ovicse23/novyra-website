@@ -1,0 +1,38 @@
+{
+  "name": "novyra-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/setup-deps.mjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "wrangler:dev": "WRANGLER_SEND_METRICS=false WRANGLER_LOG_PATH=./.wrangler/logs wrangler dev --port 8790 --ip 127.0.0.1",
+    "db:migrate:local": "WRANGLER_LOG_PATH=./.wrangler/logs wrangler d1 migrations apply DB --local",
+    "db:migrate:prod": "wrangler d1 migrations apply DB --remote",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.worker.json --noEmit"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "hono": "4.13.12",
+    "lucide-react": "0.475.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20260702.1",
+    "@types/node": "20.19.43",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "4.7.0",
+    "autoprefixer": "10.6.1",
+    "postcss": "8.5.28",
+    "tailwindcss": "3.4.19",
+    "typescript": "5.9.3",
+    "vite": "6.4.3",
+    "vitest": "2.1.9",
+    "wrangler": "3.114.17"
+  }
+}

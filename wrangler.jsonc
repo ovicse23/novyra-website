@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "novyra-worker",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2025-02-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "novyra-db",
+      "database_id": "novyra-d1-db-id",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PRIVATE_FILES",
+      "bucket_name": "novyra-private"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "ENVIRONMENT": "development",
+    "SITE_URL": "http://localhost:3000",
+    "BKASH_NUMBER": "01638002708",
+    "ROCKET_NUMBER": "016380027089",
+    "PRODUCT_PRICE": "299",
+    "DOWNLOAD_EXPIRY_HOURS": "72",
+    "MAX_DOWNLOADS": "5",
+    "SUPPORT_HOURS_MSG": "Normally within 5–30 minutes during support hours.",
+    "ADMIN_PASSWORD": "admin-secret-novyra-2026",
+    "TURNSTILE_SITE_KEY": "",
+    "TURNSTILE_SECRET_KEY": "",
+    "META_PIXEL_ID": "",
+    "GA4_MEASUREMENT_ID": ""
+  }
+}

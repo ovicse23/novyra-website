@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" width="600" height="840" fill="#0B1220">
+    <defs>
+      <linearGradient id="pGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#22D3EE" />
+        <stop offset="100%" stop-color="#8B5CF6" />
+      </linearGradient>
+      <filter id="blurFilter" x="-10%" y="-10%" width="120%" height="120%">
+        <feGaussianBlur stdDeviation="8" />
+      </filter>
+    </defs>
+    
+    <!-- Page Container -->
+    <rect x="0" y="0" width="600" height="840" rx="16" fill="#0A0F1D" stroke="#1E293B" stroke-width="2" />
+    
+    <!-- Top Header Bar -->
+    <rect x="0" y="0" width="600" height="60" fill="#070B17" />
+    <text x="30" y="38" font-family="'Inter', sans-serif" font-weight="700" font-size="14" fill="#22D3EE" letter-spacing="2">NOVYRA TOOLKIT</text>
+    <text x="520" y="38" font-family="'Inter', sans-serif" font-weight="600" font-size="13" fill="#64748B">PAGE 005/40</text>
+    <line x1="0" y1="60" x2="600" y2="60" stroke="#1E293B" stroke-width="1" />
+    
+    <!-- Chapter Title -->
+    <text x="40" y="110" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#8B5CF6" letter-spacing="2">PRACTICAL GUIDE SECTION</text>
+    <text x="40" y="145" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="24" fill="#FFFFFF">LINKEDIN & FACEBOOK OUTREACH</text>
+    <text x="40" y="175" font-family="'Inter', sans-serif" font-weight="500" font-size="15" fill="#94A3B8">Chapter 5: Social Selling Without Sounding Spammy</text>
+    
+    <!-- Key Framework Box -->
+    <rect x="40" y="210" width="520" height="230" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1.5" />
+    <text x="65" y="245" font-family="'Inter', sans-serif" font-weight="700" font-size="15" fill="#22D3EE">CORE METHODOLOGY</text>
+    
+    
+      <circle cx="70" cy="280" r="5" fill="#3B82F6" />
+      <text x="90" y="285" font-family="'Inter', sans-serif" font-weight="500" font-size="14" fill="#E2E8F0">Optimizing Your Profile for Conversions</text>
+    
+      <circle cx="70" cy="316" r="5" fill="#3B82F6" />
+      <text x="90" y="321" font-family="'Inter', sans-serif" font-weight="500" font-size="14" fill="#E2E8F0">The Warm Connection Request Strategy</text>
+    
+      <circle cx="70" cy="352" r="5" fill="#3B82F6" />
+      <text x="90" y="357" font-family="'Inter', sans-serif" font-weight="500" font-size="14" fill="#E2E8F0">Facebook Group Opportunity Mining</text>
+    
+      <circle cx="70" cy="388" r="5" fill="#3B82F6" />
+      <text x="90" y="393" font-family="'Inter', sans-serif" font-weight="500" font-size="14" fill="#E2E8F0">Transitioning from Chat to Paid Contract</text>
+    
+    
+    <!-- Blurred Proprietary Template / Secret Framework Section -->
+    <g transform="translate(40, 470)">
+      <rect x="0" y="0" width="520" height="280" rx="12" fill="#111827" stroke="#3B82F6" stroke-dasharray="4 4" stroke-width="1.5" />
+      
+      <!-- Blurred content inside -->
+      <g filter="url(#blurFilter)" opacity="0.6">
+        <text x="30" y="45" font-family="'Inter', sans-serif" font-size="15" fill="#FFFFFF">PROMPT TEMPLATE: Act as a senior client acquisition specialist...</text>
+        <rect x="30" y="65" width="460" height="15" rx="4" fill="#475569" />
+        <rect x="30" y="90" width="420" height="15" rx="4" fill="#475569" />
+        <rect x="30" y="115" width="440" height="15" rx="4" fill="#475569" />
+        <rect x="30" y="140" width="380" height="15" rx="4" fill="#475569" />
+        <rect x="30" y="170" width="460" height="20" rx="4" fill="#2563EB" opacity="0.4" />
+        <rect x="30" y="200" width="300" height="15" rx="4" fill="#475569" />
+        <rect x="30" y="225" width="410" height="15" rx="4" fill="#475569" />
+      </g>
+      
+      <!-- Overlay Lock Badge -->
+      <rect x="110" y="110" width="300" height="60" rx="30" fill="#070B17" stroke="#8B5CF6" stroke-width="2" />
+      <text x="260" y="146" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#22D3EE" text-anchor="middle" letter-spacing="1">🔒 UNLOCK FULL PDF — ৳299</text>
+    </g>
+    
+    <!-- Footer line -->
+    <text x="300" y="800" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#475569" text-anchor="middle">© NOVYRA — PERSONAL USE LICENSE ONLY</text>
+  </svg>
