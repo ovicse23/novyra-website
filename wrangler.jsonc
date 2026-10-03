@@ -12,18 +12,18 @@
   "routes": [
     {
       "pattern": "novyrabd.com/*",
-      "custom_domain": true
+      "zone_name": "novyrabd.com"
     },
     {
       "pattern": "www.novyrabd.com/*",
-      "custom_domain": true
+      "zone_name": "novyrabd.com"
     }
   ],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "novyra-db",
-      "database_id": "novyra-d1-db-id",
+      "database_id": "3be73575-c039-4644-9a95-c03066b3eb9e",
       "migrations_dir": "migrations"
     }
   ],
