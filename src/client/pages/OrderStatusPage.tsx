@@ -76,7 +76,7 @@ export const OrderStatusPage: React.FC = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5">
             <img
-              src="/assets/logo.png"
+              src="/assets/logo.png?v=3"
               alt="Novyra"
               className="h-9 sm:h-10 w-auto object-contain"
             />
@@ -190,7 +190,7 @@ export const OrderStatusPage: React.FC = () => {
                     </div>
 
                     <a
-                      href={order.download_url || `/api/download/access?orderId=${order.order_id}`}
+                      href={order.download_url || `/api/orders/${order.order_id}/download-access`}
                       onClick={() => handleDownloadClick(order.order_id)}
                       className="inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-extrabold text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
                     >

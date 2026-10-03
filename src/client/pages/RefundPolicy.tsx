@@ -9,9 +9,9 @@ export const RefundPolicy: React.FC = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5">
             <img
-              src="/assets/logo.png"
+              src="/assets/logo.png?v=3"
               alt="Novyra"
-              className="h-8 w-auto object-contain"
+              className="h-8 sm:h-9 w-auto object-contain"
             />
           </a>
           <a href="/" className="text-xs font-semibold text-slate-300 hover:text-cyan-400 flex items-center gap-1.5">

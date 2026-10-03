@@ -13,8 +13,9 @@ import {
   getOrderByOrderId,
   checkTransactionIdExists,
   updateOrderPayment,
+  incrementDownloadCount,
 } from '../services/db.ts';
-import { uploadPaymentProof } from '../services/storage.ts';
+import { uploadPaymentProof, getProductPdf } from '../services/storage.ts';
 import type { PaymentMethod } from '../../shared/types.ts';
 
 const ordersRoute = new Hono<{ Bindings: Env }>();
@@ -222,4 +223,53 @@ ordersRoute.get('/:orderId', async (c) => {
   });
 });
 
+// 4. Download PDF for Approved Order (used by OrderStatusPage button)
+ordersRoute.get('/:orderId/download-access', async (c) => {
+  const orderId = c.req.param('orderId').toUpperCase();
+  const config = getConfig(c.env);
+
+  const order = await getOrderByOrderId(c.env.DB, orderId);
+  if (!order) {
+    return c.text('Order not found.', 404);
+  }
+
+  if (order.status !== 'paid') {
+    return c.text('Payment verification required before downloading. Please check your order status.', 403);
+  }
+
+  // Check expiration (72 hours from approval)
+  if (order.download_expires_at) {
+    const expiresAt = new Date(order.download_expires_at).getTime();
+    if (Date.now() > expiresAt) {
+      return c.text(`This download link expired after ${config.downloadExpiryHours} hours. Please contact Novyra support.`, 403);
+    }
+  }
+
+  // Check download count limit
+  if (order.download_count >= config.maxDownloads) {
+    return c.text(`Download limit of ${config.maxDownloads} downloads reached for this order.`, 403);
+  }
+
+  // Fetch PDF from Cloudflare R2
+  const pdfFile = await getProductPdf(c.env.PRIVATE_FILES, config.r2ProductKey);
+  if (!pdfFile || !pdfFile.body) {
+    return c.text('PDF file is temporarily unavailable in storage. Please contact support.', 500);
+  }
+
+  // Increment download counter in D1
+  await incrementDownloadCount(c.env.DB, order.order_id);
+
+  return new Response(pdfFile.body as any, {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="Novyra-AI-Client-Hunting-Toolkit.pdf"',
+      'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+  });
+});
+
 export { ordersRoute };
+

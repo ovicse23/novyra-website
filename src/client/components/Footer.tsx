@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
           {/* Brand Left */}
           <div className="flex items-center gap-3">
             <img
-              src="/assets/logo.png"
+              src="/assets/logo.png?v=3"
               alt="Novyra Logo"
               className="h-11 sm:h-12 w-auto object-contain"
             />

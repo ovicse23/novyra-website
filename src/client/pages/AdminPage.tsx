@@ -12,6 +12,7 @@ import {
   RefreshCw,
   LogOut,
   X,
+  Download,
 } from 'lucide-react';
 import type { Order, AdminStats } from '../../shared/types';
 
@@ -165,7 +166,7 @@ export const AdminPage: React.FC = () => {
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="glass-card max-w-sm w-full p-8 rounded-2xl border-white/10 shadow-2xl text-center">
           <a href="/" className="inline-block mb-6">
-            <img src="/assets/logo.png" alt="Novyra" className="h-10 w-auto mx-auto object-contain" />
+            <img src="/assets/logo.png?v=3" alt="Novyra" className="h-10 w-auto mx-auto object-contain" />
           </a>
           <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto mb-4 text-cyan-400">
             <Lock className="w-6 h-6" />
@@ -208,7 +209,7 @@ export const AdminPage: React.FC = () => {
       <header className="border-b border-white/10 bg-slate-950/80 sticky top-0 z-30 px-4 sm:px-8 py-4 backdrop-blur-md flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img
-            src="/assets/logo.png"
+            src="/assets/logo.png?v=3"
             alt="Novyra Admin"
             className="h-9 sm:h-10 w-auto object-contain"
           />
@@ -422,6 +423,18 @@ export const AdminPage: React.FC = () => {
                       </td>
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-1.5">
+                          {o.status === 'paid' && (
+                            <a
+                              href={`/api/orders/${o.order_id}/download-access`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 font-bold text-xs transition-colors"
+                              title="Test or verify PDF download directly"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Download PDF</span>
+                            </a>
+                          )}
                           {o.status !== 'paid' && (
                             <button
                               onClick={() => handleApprove(o.order_id)}

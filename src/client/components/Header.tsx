@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCheckout, price = 299 }) =
         {/* Brand Logo */}
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Novyra Home">
           <img
-            src="/assets/logo.png"
+            src="/assets/logo.png?v=3"
             alt="Novyra — Learn. Build. Grow."
             className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
