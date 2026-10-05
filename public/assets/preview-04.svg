@@ -32,7 +32,7 @@
     
       <g transform="translate(60, 240)">
         <circle cx="6" cy="6" r="5" fill="#3B82F6" />
-        <text x="22" y="10" font-family="'Inter', sans-serif" font-weight="600" font-size="13" fill="#E2E8F0">1. Lead with the problem: Show you understand the brief & risk</text>
+        <text x="22" y="10" font-family="'Inter', sans-serif" font-weight="600" font-size="13" fill="#E2E8F0">1. Lead with the problem: Show you understand the brief &amp; risk</text>
       </g>
     
       <g transform="translate(60, 286)">
