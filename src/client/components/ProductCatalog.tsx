@@ -78,9 +78,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onSelectProduct 
                 <button
                   type="button"
                   onClick={() => onSelectProduct(BUNDLE_PRODUCT.id)}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-sm sm:text-base text-slate-950 bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all group-hover:shadow-emerald-500/40"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-sm sm:text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all group-hover:shadow-blue-500/40 border border-white/20"
                 >
-                  <Zap className="w-5 h-5 fill-slate-950" />
+                  <Zap className="w-5 h-5 text-cyan-200 fill-cyan-200" />
                   <span>Get Both Playbooks for ৳499</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>

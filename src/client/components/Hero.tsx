@@ -59,15 +59,23 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* Dual CTAs: Bundle or Individual */}
-          <div className="max-w-md mx-auto space-y-3 mb-6">
-            <button
-              onClick={() => onOpenCheckout(BUNDLE_PRODUCT.id)}
-              className="w-full py-4 px-6 rounded-xl font-black text-base sm:text-lg text-slate-950 bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 shadow-xl shadow-emerald-500/25 flex items-center justify-center gap-3 active:scale-[0.98] transition-all duration-200"
-            >
-              <Sparkles className="w-5 h-5 fill-slate-950" />
-              <span>Get Complete Bundle (Both Guides) — ৳499</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
+          <div className="w-full max-w-xl sm:max-w-2xl mx-auto space-y-4 mb-6">
+            <div className="relative group">
+              {/* Logo-inspired ambient glow matching Cyan -> Electric Blue -> Violet */}
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 via-blue-600 to-purple-600 rounded-2xl blur-lg opacity-75 group-hover:opacity-100 group-hover:blur-xl transition-all duration-300 pointer-events-none" />
+
+              <button
+                onClick={() => onOpenCheckout(BUNDLE_PRODUCT.id)}
+                className="relative w-full py-4 sm:py-5 px-6 sm:px-10 rounded-2xl font-black text-base sm:text-xl text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-2xl shadow-blue-600/40 flex items-center justify-center gap-3 sm:gap-4 active:scale-[0.98] transition-all duration-200 border border-white/25"
+              >
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-200 animate-pulse shrink-0" />
+                <span className="tracking-wide">Get Complete Bundle (Both Guides) — ৳499</span>
+                <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/20 border border-white/30 text-[11px] font-black uppercase tracking-wider text-cyan-100 shrink-0">
+                  SAVE 64%
+                </span>
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:translate-x-1.5 transition-transform shrink-0" />
+              </button>
+            </div>
 
             <div className="flex items-center justify-center gap-4 text-xs text-slate-400">
               <span>Or choose single guide:</span>
