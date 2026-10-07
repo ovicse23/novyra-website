@@ -174,30 +174,59 @@ export const OrderStatusPage: React.FC = () => {
                 </div>
 
                 <p className="text-sm text-slate-300 mb-6 leading-relaxed">
-                  Congratulations! Your transaction has been verified. You can now download your digital copy of the <strong>AI Client Hunting + Freelancing Toolkit</strong> below.
+                  Congratulations! Your transaction has been verified. You can now download your digital copy of <strong>{order.product_name}</strong> below.
                 </p>
 
-                {/* Primary Download Button */}
+                {/* Primary Download Buttons */}
                 <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 mb-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                      <div className="text-sm font-bold text-white">
-                        AI Client Hunting + Freelancing Toolkit.pdf
-                      </div>
-                      <div className="text-xs text-slate-400 mt-0.5">
-                        40 Pages • High Resolution Digital PDF
-                      </div>
-                    </div>
+                  {order.download_files && order.download_files.length > 0 ? (
+                    <div className="space-y-3">
+                      {order.download_files.map((file: any) => (
+                        <div
+                          key={file.id}
+                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors"
+                        >
+                          <div>
+                            <div className="text-sm font-bold text-white">
+                              {file.title}
+                            </div>
+                            <div className="text-xs text-slate-400 mt-0.5">
+                              {file.pages} Pages • High Resolution Digital PDF
+                            </div>
+                          </div>
 
-                    <a
-                      href={order.download_url || `/api/orders/${order.order_id}/download-access`}
-                      onClick={() => handleDownloadClick(order.order_id)}
-                      className="inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-extrabold text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span>Download PDF</span>
-                    </a>
-                  </div>
+                          <a
+                            href={file.download_url}
+                            onClick={() => handleDownloadClick(order.order_id)}
+                            className="inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
+                          >
+                            <Download className="w-4 h-4" />
+                            <span>Download PDF ({file.pages} Pgs)</span>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div>
+                        <div className="text-sm font-bold text-white">
+                          {order.product_name}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">
+                          High Resolution Digital PDF Manual
+                        </div>
+                      </div>
+
+                      <a
+                        href={order.download_url || `/api/orders/${order.order_id}/download-access`}
+                        onClick={() => handleDownloadClick(order.order_id)}
+                        className="inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-extrabold text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>Download PDF</span>
+                      </a>
+                    </div>
+                  )}
 
                   {/* Security / Expiry Notice */}
                   <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
@@ -246,6 +275,14 @@ export const OrderStatusPage: React.FC = () => {
                   <div className="flex justify-between">
                     <span className="text-slate-400">Customer Name:</span>
                     <span className="font-medium text-white">{order.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Product:</span>
+                    <span className="font-medium text-white">{order.product_name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Amount:</span>
+                    <span className="font-bold text-cyan-400">৳{order.amount} BDT</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Payment Method:</span>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" width="600" height="840" fill="#0B1220">
+  <defs>
+    <filter id="blur4" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="7" />
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="600" height="840" rx="16" fill="#0A0F1D" stroke="#1E293B" stroke-width="2" />
+
+  <rect x="0" y="0" width="600" height="64" fill="#070B17" />
+  <text x="32" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="16" fill="#A855F7" letter-spacing="3">NOVYRA</text>
+  <text x="125" y="38" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#64748B" letter-spacing="1">ECONOMICS &amp; COD MATH</text>
+  <text x="500" y="38" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#94A3B8">PAGE 36/53</text>
+  <line x1="0" y1="64" x2="600" y2="64" stroke="#1E293B" stroke-width="1" />
+
+  <text x="40" y="108" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#8B5CF6" letter-spacing="2">SECTION 05 • CASH FLOW RESILIENCE</text>
+  <text x="40" y="142" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="23" fill="#FFFFFF">CASH-ON-DELIVERY (COD) PROFIT FORMULA</text>
+
+  <rect x="40" y="180" width="520" height="200" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1.5" />
+  <rect x="40" y="180" width="520" height="38" rx="12" fill="#1E293B" />
+  <text x="60" y="205" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#38BDF8">WHY "3X ROAS" CAN STILL LOSE MONEY IN BANGLADESH</text>
+
+  <g transform="translate(60, 235)">
+    <circle cx="6" cy="6" r="4" fill="#EF4444" />
+    <text x="20" y="10" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#FCA5A5">Courier Return Cost: Return delivery fees (৳60-৳120) are paid on unaccepted parcels.</text>
+  </g>
+  <g transform="translate(60, 275)">
+    <circle cx="6" cy="6" r="4" fill="#EF4444" />
+    <text x="20" y="10" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#FCA5A5">Packaging &amp; Transit Damage: Damaged boxes eat 3-7% of gross merchandise value.</text>
+  </g>
+  <g transform="translate(60, 315)">
+    <circle cx="6" cy="6" r="4" fill="#10B981" />
+    <text x="20" y="10" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#6EE7B7">Novyra COD Formula: Real Profit = Delivered Units × (Selling Price - COGS - CPA) - (Returns × Courier Fee)</text>
+  </g>
+
+  <g transform="translate(40, 410)">
+    <rect x="0" y="0" width="520" height="340" rx="12" fill="#0B1220" stroke="#8B5CF6" stroke-dasharray="4 4" stroke-width="1.5" />
+    <text x="25" y="32" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC">UNIT MARGIN &amp; BREAKEVEN CPA CALCULATOR</text>
+    <g filter="url(#blur4)" opacity="0.65" transform="translate(25, 45)">
+      <text x="0" y="20" font-family="'Inter', sans-serif" font-size="14" fill="#FFFFFF">If Product Retail = ৳1,200 | Sourcing = ৳450 | Courier = ৳110 | Return Rate = 15%...</text>
+      <rect x="0" y="35" width="470" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="58" width="430" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="81" width="450" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="104" width="390" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="132" width="460" height="18" rx="4" fill="#8B5CF6" opacity="0.4" />
+      <rect x="0" y="160" width="320" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="183" width="420" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="206" width="380" height="14" rx="3" fill="#475569" />
+    </g>
+    <rect x="160" y="230" width="200" height="36" rx="8" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="260" y="253" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC" text-anchor="middle">LOCKED CHAPTER CONTENT</text>
+  </g>
+
+  <text x="300" y="800" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#475569" text-anchor="middle">NOVYRA PROPRIETARY BLUEPRINT • CONFIDENTIAL</text>
+</svg>

@@ -202,4 +202,27 @@ describe('End-to-End Order & Private Download Workflow', () => {
     expect(ALLOWED_IMAGE_TYPES).not.toContain('application/x-msdownload');
     expect(ALLOWED_IMAGE_TYPES).not.toContain('application/javascript');
   });
+
+  it('Step 9: Validates Multi-Product Catalog and Pricing', async () => {
+    const { PRODUCTS, BUNDLE_PRODUCT, getProductBySlug, getProductPrice, getProductTitle } = await import('../../src/shared/products');
+
+    expect(PRODUCTS).toHaveLength(2);
+    expect(PRODUCTS[0].slug).toBe('ai-client-hunting-toolkit');
+    expect(PRODUCTS[0].price).toBe(299);
+    expect(PRODUCTS[0].pages).toBe(40);
+
+    expect(PRODUCTS[1].slug).toBe('meta-ads-blueprint');
+    expect(PRODUCTS[1].price).toBe(299);
+    expect(PRODUCTS[1].pages).toBe(53);
+
+    expect(BUNDLE_PRODUCT.id).toBe('complete-growth-bundle');
+    expect(BUNDLE_PRODUCT.price).toBe(499);
+    expect(BUNDLE_PRODUCT.pages).toBe(93);
+
+    // Helpers
+    expect(getProductPrice('ai-client-hunting-toolkit')).toBe(299);
+    expect(getProductPrice('meta-ads-blueprint')).toBe(299);
+    expect(getProductPrice('complete-growth-bundle')).toBe(499);
+    expect(getProductTitle('meta-ads-blueprint')).toBe('Meta Ads Blueprint: Bangladesh Edition 2026');
+  });
 });

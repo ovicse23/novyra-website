@@ -3,21 +3,39 @@ import { AlertCircle, CheckCircle } from 'lucide-react';
 
 export const ProblemSection: React.FC = () => {
   const learnedSkills = [
-    'WordPress',
-    'SEO',
-    'Graphic Design',
-    'Video Editing',
-    'Digital Marketing',
     'Web Development',
+    'Meta & Google Ads',
+    'UI/UX Design',
+    'Video Editing',
+    'SEO & Content',
+    'E-Commerce & Dropshipping',
   ];
 
   const painPoints = [
-    'কোথায় client খুঁজবেন বুঝতে পারছেন না',
-    'Proposal পাঠাচ্ছেন কিন্তু reply পাচ্ছেন না',
-    'LinkedIn outreach কীভাবে করবেন জানা নেই',
-    'Cold email শুরু করতে পারছেন না',
-    'Follow-up কখন করবেন বুঝতে পারছেন না',
-    'AI ব্যবহার করছেন কিন্তু client hunting workflow নেই',
+    {
+      title: 'No Direct Client Pipeline',
+      desc: 'Trapped waiting for platform impressions or competing against hundreds of lowball bids on freelance marketplaces.',
+    },
+    {
+      title: 'Low Response Rates on Cold Outreach',
+      desc: 'Sending generic messages on LinkedIn or email that get ignored or marked as spam with zero buyer engagement.',
+    },
+    {
+      title: 'Burning Ad Spend Without Profit',
+      desc: 'Boosting Facebook posts or running poorly structured campaigns with high CPMs and negative return on ad spend (ROAS).',
+    },
+    {
+      title: 'Devastating Cash-on-Delivery (COD) Losses',
+      desc: 'Ignoring courier return delivery fees and failed deliveries that silently wipe out all gross profit in Bangladesh.',
+    },
+    {
+      title: 'Inconsistent Sales Conversations',
+      desc: 'Unsure how to run a diagnostic sales call, unearth client budget, or pitch high-ticket retainers with confidence.',
+    },
+    {
+      title: 'Copy Fatigue & Lack of Local Hooks',
+      desc: 'Using generic translated ad copy that fails to stop the scroll or trigger buying psychology among Bangladeshi consumers.',
+    },
   ];
 
   return (
@@ -27,13 +45,13 @@ export const ProblemSection: React.FC = () => {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold uppercase tracking-wider mb-4">
             <AlertCircle className="w-3.5 h-3.5" />
-            The Freelancer Dilemma
+            <span>The Real Market Bottleneck</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
-            Skill শেখার পরও Client পাওয়া কেন কঠিন?
+            Having Skills Isn't Enough. You Need a Repeatable Growth Engine.
           </h2>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Many freelancers spend months perfecting their crafts across:
+            Most professionals spend years mastering valuable technical capabilities across:
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-4">
             {learnedSkills.map((skill) => (
@@ -46,12 +64,12 @@ export const ProblemSection: React.FC = () => {
             ))}
           </div>
           <p className="text-rose-300/90 text-sm sm:text-base font-semibold mt-4">
-            কিন্তু সমস্যা হলো: তাদের কোনো repeatable client acquisition system নেই.
+            Yet 90% struggle because they lack a disciplined client acquisition or advertising operating system.
           </p>
         </div>
 
         {/* Pain Points Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto mb-14">
           {painPoints.map((pain, idx) => (
             <div
               key={idx}
@@ -60,7 +78,10 @@ export const ProblemSection: React.FC = () => {
               <div className="w-6 h-6 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5">
                 <span className="text-rose-400 text-xs font-bold">✕</span>
               </div>
-              <p className="text-sm font-medium text-slate-200 leading-snug">{pain}</p>
+              <div>
+                <h4 className="text-sm font-bold text-white mb-1">{pain.title}</h4>
+                <p className="text-xs text-slate-300 leading-relaxed">{pain.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -73,10 +94,10 @@ export const ProblemSection: React.FC = () => {
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-              Novyra Toolkit gives a structured, step-by-step process.
+              Novyra Playbooks Replace Guesswork with Systematic Execution
             </h3>
             <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
-              শুধুমাত্র ভাগ্যের ওপর নির্ভর না করে AI এবং প্রমাণিত সিস্টেম দিয়ে হাই-ভ্যালু ক্লায়েন্ট খুঁজে বের করুন এবং প্রফেশনালি কনভার্ট করুন.
+              Instead of relying on hope or random luck, deploy structured outbound pipelines, high-converting copy angles, and rigorous unit margin math to build sustainable revenue.
             </p>
           </div>
         </div>

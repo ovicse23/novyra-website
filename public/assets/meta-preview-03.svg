@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" width="600" height="840" fill="#0B1220">
+  <defs>
+    <filter id="blur3" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="7" />
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="600" height="840" rx="16" fill="#0A0F1D" stroke="#1E293B" stroke-width="2" />
+
+  <rect x="0" y="0" width="600" height="64" fill="#070B17" />
+  <text x="32" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="16" fill="#A855F7" letter-spacing="3">NOVYRA</text>
+  <text x="125" y="38" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#64748B" letter-spacing="1">CREATIVE &amp; BANGLA COPY MATRIX</text>
+  <text x="500" y="38" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#94A3B8">PAGE 24/53</text>
+  <line x1="0" y1="64" x2="600" y2="64" stroke="#1E293B" stroke-width="1" />
+
+  <text x="40" y="108" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#8B5CF6" letter-spacing="2">SECTION 04 • CONVERSION COPYWRITING</text>
+  <text x="40" y="142" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="23" fill="#FFFFFF">20 PROVEN BANGLA AD HOOKS</text>
+
+  <rect x="40" y="180" width="520" height="270" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1.5" />
+  <rect x="40" y="180" width="520" height="38" rx="12" fill="#1E293B" />
+  <text x="60" y="205" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#A855F7">4 HIGH-PERFORMANCE PSYCHOLOGICAL ANGLES</text>
+
+  <g transform="translate(60, 235)">
+    <text x="0" y="12" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#38BDF8">1. The Mistake / Warning Angle</text>
+    <text x="0" y="30" font-family="'Inter', sans-serif" font-size="12" fill="#CBD5E1">Example: "এই ৩টি ভুল না করলে আপনার ডেলিভারি রিটার্ন এক সপ্তাহেই অর্ধেকে নামবে..."</text>
+  </g>
+  <g transform="translate(60, 285)">
+    <text x="0" y="12" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#38BDF8">2. Direct Curiosity &amp; Counter-Intuitive Twist</text>
+    <text x="0" y="30" font-family="'Inter', sans-serif" font-size="12" fill="#CBD5E1">Example: "কেন বেশি বাজেট দিয়ে বুস্ট করলেও সেল বাড়ে না? আসল সিক্রেট এখানে..."</text>
+  </g>
+  <g transform="translate(60, 335)">
+    <text x="0" y="12" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#38BDF8">3. Social Proof &amp; Local Relatability</text>
+    <text x="0" y="30" font-family="'Inter', sans-serif" font-size="12" fill="#CBD5E1">Example: "ঢাকার বাইরে ডেলিভারি দিতে গিয়ে রিটার্ন নিয়ে হতাশ? এই মেথড দেখুন..."</text>
+  </g>
+  <g transform="translate(60, 385)">
+    <text x="0" y="12" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#38BDF8">4. The Immediate Proof / Before-After Comparison</text>
+    <text x="0" y="30" font-family="'Inter', sans-serif" font-size="12" fill="#CBD5E1">Example: "বিজ্ঞাপনে প্রতিদিন ১,০০০ টাকা খরচ করে ৩,৫০০ টাকার রিটার্ন পাওয়ার ছক..."</text>
+  </g>
+
+  <g transform="translate(40, 480)">
+    <rect x="0" y="0" width="520" height="270" rx="12" fill="#0B1220" stroke="#8B5CF6" stroke-dasharray="4 4" stroke-width="1.5" />
+    <text x="25" y="32" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC">10 PRIMARY TEXT + 10 HEADLINE FORMULAS (FULL LIST)</text>
+    <g filter="url(#blur3)" opacity="0.65" transform="translate(25, 45)">
+      <text x="0" y="20" font-family="'Inter', sans-serif" font-size="14" fill="#FFFFFF">Bangla Hook #05: [Customer Problem] দূর করুন মাত্র ৩ দিনে...</text>
+      <rect x="0" y="35" width="470" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="58" width="430" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="81" width="450" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="104" width="390" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="132" width="460" height="18" rx="4" fill="#8B5CF6" opacity="0.4" />
+      <rect x="0" y="160" width="320" height="14" rx="3" fill="#475569" />
+    </g>
+    <rect x="160" y="180" width="200" height="36" rx="8" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="260" y="203" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC" text-anchor="middle">LOCKED CHAPTER CONTENT</text>
+  </g>
+
+  <text x="300" y="800" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#475569" text-anchor="middle">NOVYRA PROPRIETARY BLUEPRINT • CONFIDENTIAL</text>
+</svg>

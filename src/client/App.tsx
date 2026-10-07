@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { ProductCatalog } from './components/ProductCatalog';
 import { ProblemSection } from './components/ProblemSection';
 import { WhatsInside } from './components/WhatsInside';
 import { PdfPreview } from './components/PdfPreview';
+import { ReviewsSection } from './components/ReviewsSection';
 import { WhoIsThisFor } from './components/WhoIsThisFor';
 import { ValueStack } from './components/ValueStack';
 import { HowItWorks } from './components/HowItWorks';
@@ -25,9 +27,12 @@ import { RefundPolicy } from './pages/RefundPolicy';
 import { captureAndStoreUtm } from './lib/utm';
 import { initTracking, trackPageView, trackViewContent } from './lib/analytics';
 import type { ProductConfig } from '../shared/types';
+import { BUNDLE_PRODUCT } from '../shared/products';
 
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string>(BUNDLE_PRODUCT.id);
+
   const [config, setConfig] = useState<ProductConfig>({
     slug: 'ai-client-hunting-toolkit',
     name: 'AI Client Hunting + Freelancing Toolkit',
@@ -84,6 +89,13 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  const handleOpenCheckout = (productId?: string) => {
+    if (productId) {
+      setSelectedProductId(productId);
+    }
+    setModalOpen(true);
+  };
+
   // Sub-routes routing
   if (pathname.startsWith('/admin')) {
     return <AdminPage />;
@@ -110,43 +122,51 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-background text-white selection:bg-cyan-500 selection:text-black">
       {/* Header */}
       <Header
-        onOpenCheckout={() => setModalOpen(true)}
+        onOpenCheckout={handleOpenCheckout}
         price={config.price}
       />
 
       <main>
-        {/* Hero Section */}
+        {/* Hero Section with Dual Playbook Showcase */}
         <Hero
-          onOpenCheckout={() => setModalOpen(true)}
+          onOpenCheckout={handleOpenCheckout}
           price={config.price}
           regularPrice={config.regularPrice}
         />
 
-        {/* Problem Section */}
+        {/* Product Catalog / Playbook Library */}
+        <ProductCatalog
+          onSelectProduct={(slug) => handleOpenCheckout(slug)}
+        />
+
+        {/* Problem Section (100% English) */}
         <ProblemSection />
 
-        {/* What's Inside Section (12 modules) */}
+        {/* What's Inside Curriculum Tabs */}
         <WhatsInside />
 
-        {/* Real PDF Sample Preview Grid */}
+        {/* Real PDF Sample Preview Grid for both books */}
         <PdfPreview
-          onOpenCheckout={() => setModalOpen(true)}
+          onOpenCheckout={handleOpenCheckout}
           price={config.price}
         />
+
+        {/* Authentic Customer Reviews & Ratings */}
+        <ReviewsSection />
 
         {/* Who Is This For? */}
         <WhoIsThisFor />
 
         {/* What You Get / Value Stack */}
         <ValueStack
-          onOpenCheckout={() => setModalOpen(true)}
+          onOpenCheckout={() => handleOpenCheckout(BUNDLE_PRODUCT.id)}
           price={config.price}
           regularPrice={config.regularPrice}
         />
 
         {/* How It Works (4-Step Visual Flow) */}
         <HowItWorks
-          onOpenCheckout={() => setModalOpen(true)}
+          onOpenCheckout={() => handleOpenCheckout()}
           price={config.price}
         />
 
@@ -155,7 +175,7 @@ export const App: React.FC = () => {
 
         {/* Final High-Converting CTA */}
         <FinalCta
-          onOpenCheckout={() => setModalOpen(true)}
+          onOpenCheckout={handleOpenCheckout}
           price={config.price}
         />
 
@@ -168,15 +188,16 @@ export const App: React.FC = () => {
 
       {/* Mobile Sticky CTA Bar */}
       <MobileStickyCta
-        onOpenCheckout={() => setModalOpen(true)}
+        onOpenCheckout={() => handleOpenCheckout()}
         price={config.price}
         isModalOpen={modalOpen}
       />
 
-      {/* 3-Step Accessible Checkout Modal */}
+      {/* 3-Step Accessible Checkout Modal with Multi-Product Support */}
       <CheckoutModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        defaultProductId={selectedProductId}
         price={config.price}
         bkashNumber={config.bkashNumber}
         rocketNumber={config.rocketNumber}

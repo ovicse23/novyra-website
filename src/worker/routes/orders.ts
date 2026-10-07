@@ -16,9 +16,43 @@ import {
   incrementDownloadCount,
 } from '../services/db.ts';
 import { uploadPaymentProof, getProductPdf } from '../services/storage.ts';
-import type { PaymentMethod } from '../../shared/types.ts';
+import type { PaymentMethod, DownloadFileItem } from '../../shared/types.ts';
+import { getProductPrice, getProductTitle } from '../../shared/products.ts';
 
 const ordersRoute = new Hono<{ Bindings: Env }>();
+
+function resolvePdfFile(productId: string, fileParam?: string | null): { r2Key: string; filename: string; title: string } {
+  const param = fileParam?.toLowerCase();
+  if (param === 'meta-ads-blueprint' || param === 'novyra-meta-ads-blueprint-2026.pdf') {
+    return {
+      r2Key: 'products/novyra-meta-ads-blueprint-2026.pdf',
+      filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+      title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+    };
+  }
+  if (param === 'ai-client-hunting-toolkit' || param === 'novyra-ai-client-hunting-toolkit.pdf') {
+    return {
+      r2Key: 'products/novyra-ai-client-hunting-toolkit.pdf',
+      filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+      title: 'AI Client Hunting + Freelancing Toolkit',
+    };
+  }
+
+  if (productId === 'meta-ads-blueprint') {
+    return {
+      r2Key: 'products/novyra-meta-ads-blueprint-2026.pdf',
+      filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+      title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+    };
+  }
+
+  // Default to AI Client Hunting Toolkit
+  return {
+    r2Key: 'products/novyra-ai-client-hunting-toolkit.pdf',
+    filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+    title: 'AI Client Hunting + Freelancing Toolkit',
+  };
+}
 
 // 1. Create Order
 ordersRoute.post('/', async (c) => {
@@ -33,6 +67,7 @@ ordersRoute.post('/', async (c) => {
   const name = sanitizeString(body.name, 100);
   const email = sanitizeString(body.email, 150).toLowerCase();
   const phone = sanitizeString(body.phone, 30);
+  const requestedProductId = sanitizeString(body.product_id, 100) || 'ai-client-hunting-toolkit';
 
   if (!name || name.length < 2) {
     return c.json({ success: false, error: 'Please enter a valid full name.' }, 400);
@@ -43,6 +78,14 @@ ordersRoute.post('/', async (c) => {
   if (!isValidPhone(phone)) {
     return c.json({ success: false, error: 'Please enter a valid mobile number (e.g. 017xxxxxxxx).' }, 400);
   }
+
+  // Resolve product and pricing
+  let productId = 'ai-client-hunting-toolkit';
+  if (requestedProductId === 'meta-ads-blueprint' || requestedProductId === 'complete-growth-bundle') {
+    productId = requestedProductId;
+  }
+  const amount = getProductPrice(productId);
+  const productName = getProductTitle(productId);
 
   // Generate unique order ID
   let orderId = generateOrderId();
@@ -60,8 +103,8 @@ ordersRoute.post('/', async (c) => {
       name,
       email,
       phone,
-      product_id: 'ai-client-hunting-toolkit',
-      amount: config.productPrice,
+      product_id: productId,
+      amount,
       currency: 'BDT',
       utm_source: sanitizeString(body.utm_source, 100),
       utm_medium: sanitizeString(body.utm_medium, 100),
@@ -74,7 +117,9 @@ ordersRoute.post('/', async (c) => {
     return c.json({
       success: true,
       order_id: order.order_id,
-      amount: config.productPrice,
+      product_id: productId,
+      product_name: productName,
+      amount,
       currency: 'BDT',
       bkash_number: config.bkashNumber,
       rocket_number: config.rocketNumber,
@@ -192,12 +237,53 @@ ordersRoute.get('/:orderId', async (c) => {
     }
   }
 
-  // If approved and paid, prepare secure download url info
+  const productName = getProductTitle(order.product_id);
+
+  // If approved and paid, prepare secure download file options
   let downloadUrl: string | undefined;
+  let downloadFiles: DownloadFileItem[] = [];
+
   if (order.status === 'paid' && order.download_token_hash) {
-    // If client is already authorized by order ID, we can provide the download path or token
-    // The download token hash is in DB, and for approved orders we can generate or return access
     downloadUrl = `/api/orders/${order.order_id}/download-access`;
+
+    if (order.product_id === 'complete-growth-bundle') {
+      downloadFiles = [
+        {
+          id: 'ai-client-hunting-toolkit',
+          title: 'AI Client Hunting + Freelancing Toolkit',
+          pages: 40,
+          filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+          download_url: `/api/orders/${order.order_id}/download-access?file=ai-client-hunting-toolkit`,
+        },
+        {
+          id: 'meta-ads-blueprint',
+          title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+          pages: 53,
+          filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+          download_url: `/api/orders/${order.order_id}/download-access?file=meta-ads-blueprint`,
+        },
+      ];
+    } else if (order.product_id === 'meta-ads-blueprint') {
+      downloadFiles = [
+        {
+          id: 'meta-ads-blueprint',
+          title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+          pages: 53,
+          filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+          download_url: `/api/orders/${order.order_id}/download-access`,
+        },
+      ];
+    } else {
+      downloadFiles = [
+        {
+          id: 'ai-client-hunting-toolkit',
+          title: 'AI Client Hunting + Freelancing Toolkit',
+          pages: 40,
+          filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+          download_url: `/api/orders/${order.order_id}/download-access`,
+        },
+      ];
+    }
   }
 
   return c.json({
@@ -205,7 +291,8 @@ ordersRoute.get('/:orderId', async (c) => {
     order: {
       order_id: order.order_id,
       name: order.name,
-      product_name: 'AI Client Hunting + Freelancing Toolkit',
+      product_id: order.product_id,
+      product_name: productName,
       amount: order.amount,
       currency: order.currency,
       status: order.status,
@@ -215,6 +302,7 @@ ordersRoute.get('/:orderId', async (c) => {
       created_at: order.created_at,
       approved_at: order.approved_at,
       download_url: downloadUrl,
+      download_files: downloadFiles.length > 0 ? downloadFiles : undefined,
       download_expires_at: order.download_expires_at,
       download_count: order.download_count,
       max_downloads: config.maxDownloads,
@@ -223,9 +311,10 @@ ordersRoute.get('/:orderId', async (c) => {
   });
 });
 
-// 4. Download PDF for Approved Order (used by OrderStatusPage button)
+// 4. Download PDF for Approved Order
 ordersRoute.get('/:orderId/download-access', async (c) => {
   const orderId = c.req.param('orderId').toUpperCase();
+  const fileParam = c.req.query('file');
   const config = getConfig(c.env);
 
   const order = await getOrderByOrderId(c.env.DB, orderId);
@@ -250,8 +339,11 @@ ordersRoute.get('/:orderId/download-access', async (c) => {
     return c.text(`Download limit of ${config.maxDownloads} downloads reached for this order.`, 403);
   }
 
+  // Resolve target PDF
+  const target = resolvePdfFile(order.product_id, fileParam);
+
   // Fetch PDF from Cloudflare R2
-  const pdfFile = await getProductPdf(c.env.PRIVATE_FILES, config.r2ProductKey);
+  const pdfFile = await getProductPdf(c.env.PRIVATE_FILES, target.r2Key);
   if (!pdfFile || !pdfFile.body) {
     return c.text('PDF file is temporarily unavailable in storage. Please contact support.', 500);
   }
@@ -263,7 +355,7 @@ ordersRoute.get('/:orderId/download-access', async (c) => {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="Novyra-AI-Client-Hunting-Toolkit.pdf"',
+      'Content-Disposition': `attachment; filename="${target.filename}"`,
       'Cache-Control': 'private, no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0',
@@ -272,4 +364,3 @@ ordersRoute.get('/:orderId/download-access', async (c) => {
 });
 
 export { ordersRoute };
-

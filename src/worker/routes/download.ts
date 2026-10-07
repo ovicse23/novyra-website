@@ -5,11 +5,42 @@ import { hashSha256 } from '../services/security.ts';
 import {
   getOrderByTokenHash,
   incrementDownloadCount,
-  getOrderByOrderId,
 } from '../services/db.ts';
 import { getProductPdf } from '../services/storage.ts';
 
 const downloadRoute = new Hono<{ Bindings: Env }>();
+
+function resolvePdfFile(productId: string, fileParam?: string | null): { r2Key: string; filename: string; title: string } {
+  const param = fileParam?.toLowerCase();
+  if (param === 'meta-ads-blueprint' || param === 'novyra-meta-ads-blueprint-2026.pdf') {
+    return {
+      r2Key: 'products/novyra-meta-ads-blueprint-2026.pdf',
+      filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+      title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+    };
+  }
+  if (param === 'ai-client-hunting-toolkit' || param === 'novyra-ai-client-hunting-toolkit.pdf') {
+    return {
+      r2Key: 'products/novyra-ai-client-hunting-toolkit.pdf',
+      filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+      title: 'AI Client Hunting + Freelancing Toolkit',
+    };
+  }
+
+  if (productId === 'meta-ads-blueprint') {
+    return {
+      r2Key: 'products/novyra-meta-ads-blueprint-2026.pdf',
+      filename: 'Novyra-Meta-Ads-Blueprint-2026.pdf',
+      title: 'Meta Ads Blueprint: Bangladesh Edition 2026',
+    };
+  }
+
+  return {
+    r2Key: 'products/novyra-ai-client-hunting-toolkit.pdf',
+    filename: 'Novyra-AI-Client-Hunting-Toolkit.pdf',
+    title: 'AI Client Hunting + Freelancing Toolkit',
+  };
+}
 
 function renderFriendlyErrorHtml(title: string, message: string, supportInfo: string): Response {
   const html = `<!DOCTYPE html>
@@ -99,6 +130,7 @@ function renderFriendlyErrorHtml(title: string, message: string, supportInfo: st
 // 1. Secure Token Download Endpoint
 downloadRoute.get('/:token', async (c) => {
   const rawToken = c.req.param('token');
+  const fileParam = c.req.query('file');
   const config = getConfig(c.env);
 
   if (!rawToken || rawToken.length < 16) {
@@ -141,8 +173,11 @@ downloadRoute.get('/:token', async (c) => {
     );
   }
 
+  // Resolve target PDF
+  const target = resolvePdfFile(order.product_id, fileParam);
+
   // Fetch PDF from R2 Private Bucket
-  const pdfFile = await getProductPdf(c.env.PRIVATE_FILES, config.r2ProductKey);
+  const pdfFile = await getProductPdf(c.env.PRIVATE_FILES, target.r2Key);
   if (!pdfFile || !pdfFile.body) {
     return renderFriendlyErrorHtml(
       'PDF Temporarily Unavailable',
@@ -158,7 +193,7 @@ downloadRoute.get('/:token', async (c) => {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="Novyra-AI-Client-Hunting-Toolkit.pdf"',
+      'Content-Disposition': `attachment; filename="${target.filename}"`,
       'Cache-Control': 'private, no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0',

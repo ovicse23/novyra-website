@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Check,
   Copy,
   ArrowRight,
-  ShieldAlert,
   Upload,
   Clock,
   Loader2,
@@ -19,10 +18,17 @@ import {
   trackPaymentProofSubmitted,
 } from '../lib/analytics';
 import type { PaymentMethod } from '../../shared/types';
+import {
+  PRODUCTS,
+  BUNDLE_PRODUCT,
+  getProductPrice,
+  getProductTitle,
+} from '../../shared/products';
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultProductId?: string;
   price?: number;
   bkashNumber?: string;
   rocketNumber?: string;
@@ -32,13 +38,16 @@ interface CheckoutModalProps {
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   isOpen,
   onClose,
-  price = 299,
+  defaultProductId = 'complete-growth-bundle',
   bkashNumber = '01638002708',
   rocketNumber = '016380027089',
   turnstileSiteKey: _turnstileSiteKey = '',
 }) => {
   // Wizard steps: 1 = Order info, 2 = Payment Instructions, 3 = Submit Txn, 4 = Success/Pending
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+
+  // Selected product
+  const [selectedProductId, setSelectedProductId] = useState<string>(defaultProductId);
 
   // Form states
   const [name, setName] = useState('');
@@ -47,6 +56,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   // Generated Order Details
   const [orderId, setOrderId] = useState('');
+  const [confirmedProductName, setConfirmedProductName] = useState('');
 
   // Payment details
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>('bKash');
@@ -59,7 +69,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    if (defaultProductId) {
+      setSelectedProductId(defaultProductId);
+    }
+  }, [defaultProductId, isOpen]);
+
   if (!isOpen) return null;
+
+  const currentPrice = getProductPrice(selectedProductId);
+  const currentTitle = getProductTitle(selectedProductId);
 
   // Handle Step 1: Create Order
   const handleCreateOrder = async (e: React.FormEvent) => {
@@ -89,6 +108,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim(),
+          product_id: selectedProductId,
           ...attribution,
         }),
       });
@@ -99,9 +119,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       }
 
       setOrderId(data.order_id);
+      setConfirmedProductName(data.product_name || currentTitle);
       setPayerNumber(phone.trim());
       setStep(2);
-      trackInitiateCheckout(price);
+      trackInitiateCheckout(currentPrice);
       trackPaymentInstructionsViewed('bKash', data.order_id);
     } catch (err: any) {
       setErrorMessage(err.message || 'Something went wrong. Please check your connection.');
@@ -175,16 +196,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 blur-3xl pointer-events-none rounded-full" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 blur-3xl pointer-events-none rounded-full" />
 
-        {/* Modal Top Header Bar: Stepper + Close Button (Never overlaps) */}
-        <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-800">
+        {/* Modal Top Header Bar: Stepper + Close Button */}
+        <div className="flex items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-800">
           {step < 4 ? (
             <div className="flex items-center gap-1.5 sm:gap-3 text-[11px] sm:text-xs font-bold text-slate-400 min-w-0 overflow-x-auto">
               <span className={`shrink-0 ${step >= 1 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
-                1. Your Info
+                1. Order Info
               </span>
               <span className="text-slate-600 shrink-0">→</span>
               <span className={`shrink-0 ${step >= 2 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
-                2. Send ৳{price}
+                2. Send ৳{currentPrice}
               </span>
               <span className="text-slate-600 shrink-0">→</span>
               <span className={`shrink-0 ${step >= 3 ? 'text-cyan-400 flex items-center gap-1' : ''}`}>
@@ -193,7 +214,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
           ) : (
             <div className="text-xs font-bold text-emerald-400 flex items-center gap-1">
-              ✓ Order Verified
+              ✓ Order Submitted
             </div>
           )}
 
@@ -218,21 +239,89 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* STEP 1: Buyer Information Form */}
         {step === 1 && (
           <div>
-            <div className="mb-5">
+            <div className="mb-4">
               <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-widest block mb-1">
                 STEP 1 OF 3
               </span>
               <h2 id="modal-title" className="text-xl sm:text-2xl font-black text-white">
-                Create Your Order
+                Select Playbook &amp; Details
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Enter your details to generate your order ID and payment instructions.
-              </p>
             </div>
 
-            <form onSubmit={handleCreateOrder} className="space-y-4">
+            {/* Product Selector */}
+            <div className="space-y-2 mb-5">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                Choose Playbook Package:
+              </label>
+
+              {/* Bundle Option */}
+              <button
+                type="button"
+                onClick={() => setSelectedProductId(BUNDLE_PRODUCT.id)}
+                className={`w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
+                  selectedProductId === BUNDLE_PRODUCT.id
+                    ? 'bg-emerald-950/40 border-emerald-500 text-white shadow-md'
+                    : 'bg-slate-950/70 border-slate-800 text-slate-300 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      selectedProductId === BUNDLE_PRODUCT.id
+                        ? 'border-emerald-400 bg-emerald-500'
+                        : 'border-slate-600'
+                    }`}
+                  >
+                    {selectedProductId === BUNDLE_PRODUCT.id && (
+                      <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-bold flex items-center gap-2">
+                      <span>Complete Growth Bundle (93 Pgs)</span>
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-black">
+                        SAVE 64%
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      Both Guides: Client Hunting + Meta Ads 2026
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-sm sm:text-base font-black text-emerald-400">৳499</div>
+                  <div className="text-[10px] text-slate-500 line-through">৳1,398</div>
+                </div>
+              </button>
+
+              {/* Individual Products */}
+              <div className="grid grid-cols-2 gap-2">
+                {PRODUCTS.map((prod) => (
+                  <button
+                    key={prod.id}
+                    type="button"
+                    onClick={() => setSelectedProductId(prod.id)}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      selectedProductId === prod.id
+                        ? prod.accentColor === 'cyan'
+                          ? 'bg-cyan-950/40 border-cyan-500 text-white'
+                          : 'bg-purple-950/40 border-purple-500 text-white'
+                        : 'bg-slate-950/70 border-slate-800 text-slate-400 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="text-xs font-bold text-white truncate mb-0.5">
+                      {prod.shortTitle}
+                    </div>
+                    <div className="text-[11px] text-slate-400">{prod.pages} Pages</div>
+                    <div className="text-xs font-black text-white mt-1">৳299 BDT</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <form onSubmit={handleCreateOrder} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                   Full Name <span className="text-rose-400">*</span>
                 </label>
                 <input
@@ -241,12 +330,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Tanvir Ahmed"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-base focus:border-cyan-400 transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-400 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                   Email Address <span className="text-rose-400">*</span>
                 </label>
                 <input
@@ -255,7 +344,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. tanvir@example.com"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-base focus:border-cyan-400 transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-400 transition-colors"
                 />
                 <span className="text-[11px] text-slate-400 mt-1 block">
                   Your PDF download link will be tied to this email.
@@ -263,7 +352,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                   Mobile Number <span className="text-rose-400">*</span>
                 </label>
                 <input
@@ -272,32 +361,34 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. 01712345678"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-base focus:border-cyan-400 transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-400 transition-colors"
                 />
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between">
                 <div>
-                  <span className="text-xs text-slate-400 block">Total Due</span>
-                  <span className="text-xl font-black text-white">৳{price} BDT</span>
+                  <span className="text-[11px] text-slate-400 block">Total Due</span>
+                  <span className="text-lg font-black text-white">৳{currentPrice} BDT</span>
                 </div>
-                <span className="text-xs text-cyan-400 font-semibold">40-Page Toolkit</span>
+                <span className="text-xs text-cyan-400 font-semibold truncate max-w-[200px]">
+                  {currentTitle}
+                </span>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 rounded-xl font-extrabold text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all"
+                className="w-full py-3.5 rounded-xl font-extrabold text-sm sm:text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin" />
                     <span>Creating Order...</span>
                   </>
                 ) : (
                   <>
-                    <span>Proceed to Payment</span>
-                    <ArrowRight className="w-5 h-5" />
+                    <span>Proceed to Payment (৳{currentPrice})</span>
+                    <ArrowRight className="w-4 h-4" />
                   </>
                 )}
               </button>
@@ -318,7 +409,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 </span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
-                Pay ৳{price} via bKash or Rocket
+                Pay ৳{currentPrice} via bKash or Rocket
               </h2>
             </div>
 
@@ -357,76 +448,77 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </button>
             </div>
 
-            {/* Payment Box */}
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 mb-4 space-y-3">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Account Type: <strong className="text-white">Personal</strong></span>
-                <span>Amount: <strong className="text-cyan-400 text-sm">৳{price}</strong></span>
+            {/* Account Card */}
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-slate-400">
+                  {selectedMethod} Personal Number (Send Money):
+                </span>
+                <span className="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-medium">
+                  Personal
+                </span>
               </div>
 
-              {/* Number with Copy Button */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-700/80">
-                <div>
-                  <span className="text-[10px] text-slate-400 block font-semibold uppercase">
-                    {selectedMethod} Number:
-                  </span>
-                  <span className="text-lg sm:text-xl font-mono font-bold text-white tracking-wider">
-                    {activeNumber}
-                  </span>
-                </div>
+              <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <span className="font-mono text-lg font-bold text-cyan-400 tracking-wider">
+                  {activeNumber}
+                </span>
                 <button
                   type="button"
                   onClick={() => handleCopyNumber(activeNumber)}
-                  className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 flex items-center gap-1.5 transition-colors"
                 >
-                  {copiedNumber ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedNumber ? 'Copied!' : 'Copy'}</span>
+                  {copiedNumber ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Copy</span>
+                    </>
+                  )}
                 </button>
-              </div>
-
-              {/* Step by step Send Money instructions */}
-              <div className="text-xs text-slate-300 space-y-1.5 pt-1">
-                <div className="font-bold text-slate-200">How to send money:</div>
-                <ol className="list-decimal pl-4 space-y-1 text-slate-300">
-                  <li>Open your <strong>{selectedMethod} App</strong>.</li>
-                  <li>Select <strong>Send Money</strong>.</li>
-                  <li>Enter number: <strong className="font-mono text-cyan-300">{activeNumber}</strong></li>
-                  <li>Enter amount: <strong className="text-cyan-300">৳{price}</strong></li>
-                  <li>In Reference, write: <strong className="font-mono text-white">{orderId}</strong></li>
-                  <li>Complete with your PIN and copy the <strong>Transaction ID (TxnID)</strong>.</li>
-                </ol>
               </div>
             </div>
 
-            {/* Security Warning */}
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2.5 mb-5">
-              <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0" />
-              <span>
-                <strong>Warning:</strong> Never share your bKash/Rocket PIN or OTP with anyone. We will never ask for your PIN.
-              </span>
+            {/* Instruction Steps */}
+            <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800/80 mb-5 text-xs text-slate-300 space-y-2">
+              <div className="font-bold text-white mb-1 flex items-center gap-1.5">
+                <span>Follow These Steps:</span>
+              </div>
+              <ol className="list-decimal list-inside space-y-1 text-slate-300 leading-relaxed">
+                <li>Open your {selectedMethod} app or dial USSD.</li>
+                <li>Select <strong>Send Money</strong>.</li>
+                <li>Enter recipient number: <strong className="text-cyan-400 font-mono">{activeNumber}</strong>.</li>
+                <li>Enter amount: <strong className="text-white">৳{currentPrice} BDT</strong>.</li>
+                <li>Enter Reference: <strong className="text-cyan-400 font-mono">{orderId}</strong>.</li>
+                <li>Confirm PIN and save the <strong>Transaction ID (TxnID)</strong>.</li>
+              </ol>
             </div>
 
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="py-3 px-4 rounded-xl font-bold text-xs text-slate-400 hover:text-white bg-slate-800"
+                className="py-3 px-4 rounded-xl font-bold text-xs text-slate-400 hover:text-white bg-slate-800 transition-colors"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="flex-1 py-3 px-6 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 flex items-center justify-center gap-2"
+                className="flex-1 py-3 px-6 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
               >
-                <span>I Have Paid — Submit Txn ID</span>
+                <span>I Have Sent Money — Submit TxnID</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
         )}
 
-        {/* STEP 3: Submit Payment Transaction ID & Proof */}
+        {/* STEP 3: Transaction ID Submission */}
         {step === 3 && (
           <div>
             <div className="mb-4">
@@ -435,54 +527,25 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   STEP 3 OF 3
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold">
-                  {orderId}
+                  Order ID: {orderId}
                 </span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
-                Submit Payment Proof
+                Submit Payment Verification
               </h2>
-              <p className="text-xs text-slate-300 mt-1">
-                Enter your payment details for manual verification.
-              </p>
             </div>
 
             <form onSubmit={handleSubmitPayment} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  Payment Method Used
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedMethod('bKash')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold border ${
-                      selectedMethod === 'bKash' ? 'bg-[#E2136E] text-white border-transparent' : 'bg-slate-950 text-slate-400 border-slate-800'
-                    }`}
-                  >
-                    bKash
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedMethod('Rocket')}
-                    className={`py-2 px-3 rounded-lg text-xs font-bold border ${
-                      selectedMethod === 'Rocket' ? 'bg-[#8C3494] text-white border-transparent' : 'bg-slate-950 text-slate-400 border-slate-800'
-                    }`}
-                  >
-                    Rocket
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                  Sender Number (Paid From) <span className="text-rose-400">*</span>
+                  Sender {selectedMethod} Number <span className="text-rose-400">*</span>
                 </label>
                 <input
                   type="tel"
                   required
                   value={payerNumber}
                   onChange={(e) => setPayerNumber(e.target.value)}
-                  placeholder="e.g. 017xxxxxxxx"
+                  placeholder="e.g. 01712345678"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-base focus:border-cyan-400 transition-colors"
                 />
               </div>
@@ -496,11 +559,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   required
                   value={transactionId}
                   onChange={(e) => setTransactionId(e.target.value.toUpperCase())}
-                  placeholder="e.g. BL92K0XXXX"
+                  placeholder="e.g. BKT7294XYZ"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-base font-mono uppercase focus:border-cyan-400 transition-colors"
                 />
                 <span className="text-[11px] text-slate-400 mt-1 block">
-                  Find the 8-10 character TxnID in your bKash/Rocket confirmation SMS.
+                  Find the 8-10 character TxnID in your {selectedMethod} SMS.
                 </span>
               </div>
 
@@ -572,7 +635,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </h2>
 
             <p className="text-sm text-slate-300 leading-relaxed max-w-sm mx-auto mb-6">
-              We have received your transaction details. Our admin team will verify your transaction and unlock your private download link after approval.
+              We have received your transaction details. Our admin team will verify your transaction against our statement and unlock your private download link after approval.
             </p>
 
             {/* Order Summary Card */}
@@ -583,11 +646,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Product:</span>
-                <span className="text-white font-medium">AI Client Hunting Toolkit</span>
+                <span className="text-white font-medium">{confirmedProductName || currentTitle}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Amount:</span>
-                <span className="text-white font-bold">৳{price} BDT</span>
+                <span className="text-white font-bold">৳{currentPrice} BDT</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Transaction ID:</span>

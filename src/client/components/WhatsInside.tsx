@@ -1,233 +1,256 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Search,
   Briefcase,
-  Layers,
   Linkedin,
-  Facebook,
   Mail,
   Bot,
-  FileCode,
-  DollarSign,
   PhoneCall,
-  ShieldAlert,
-  CalendarCheck2,
+  TrendingUp,
+  Cpu,
+  Target,
+  FileText,
+  Calculator,
+  Compass,
+  CheckCircle2,
 } from 'lucide-react';
 
 export const WhatsInside: React.FC = () => {
-  const modules = [
+  const [activeTab, setActiveTab] = useState<'client-hunting' | 'meta-ads'>('client-hunting');
+
+  const clientHuntingModules = [
     {
       num: '01',
-      title: 'Client Research with AI',
+      title: 'Client Research & Trigger Detection',
       icon: Search,
       color: 'from-cyan-400 to-blue-500',
-      borderColor: 'hover:border-cyan-500/40',
       bullets: [
-        'Ideal clients & high-budget buyer identification',
-        'Finding actual business decision makers',
-        'Pinpointing specific business problems & gaps',
-        'Discovering high-value service opportunities',
-        'Extracting unique personalization points with AI',
+        'Identify companies with high buying power & urgent needs',
+        'Finding decision-maker contact emails & LinkedIn profiles',
+        'Detecting buying triggers (job openings, rebrands, broken tech)',
+        'Extracting deep company personalization points with AI',
       ],
     },
     {
       num: '02',
-      title: 'Upwork Strategy',
+      title: 'Upwork & Freelance Marketplace Strategy',
       icon: Briefcase,
       color: 'from-emerald-400 to-teal-500',
-      borderColor: 'hover:border-emerald-500/40',
       bullets: [
-        'Advanced job filtering & budget qualification',
-        'In-depth client hiring history & job analysis',
-        'The 4-sentence proposal personalization formula',
-        'Winning proposal structure & opening hooks',
+        'Advanced job filtering & budget qualification parameters',
+        'Analyzing client hiring patterns & budget history',
+        'The 4-sentence high-impact proposal formula',
         'Filtering out red flags & low-budget time wasters',
       ],
     },
     {
       num: '03',
-      title: 'Fiverr Strategy',
-      icon: Layers,
-      color: 'from-green-400 to-emerald-600',
-      borderColor: 'hover:border-green-500/40',
+      title: 'LinkedIn Outreach Operating System',
+      icon: Linkedin,
+      color: 'from-blue-400 to-indigo-500',
       bullets: [
-        'Premium gig positioning to attract Western clients',
-        'High-converting buyer inbox communication',
-        'Researching buyer profiles & past feedback',
-        'Turning one-off gig buyers into direct retainers',
+        'Finding qualified international founders without paid Sales Nav',
+        'High-acceptance connection message templates',
+        'Value-first conversation openers that avoid pitch-slapping',
+        'Strategic 3-step follow-up messages that revive dormant leads',
       ],
     },
     {
       num: '04',
-      title: 'LinkedIn Outreach',
-      icon: Linkedin,
-      color: 'from-blue-400 to-indigo-500',
-      borderColor: 'hover:border-blue-500/40',
+      title: 'Cold Email Outbound Machine',
+      icon: Mail,
+      color: 'from-purple-400 to-indigo-600',
       bullets: [
-        'Finding qualified prospects without paid Sales Nav',
-        'High-acceptance connection message templates',
-        'Natural conversation starters (no spammy sales pitch)',
-        'Value-first follow-up sequences that convert',
+        'Subject line formulas with 60%+ open rates in 2026',
+        'The 80-word relevance bridge framework',
+        'Micro-case study formatting for maximum credibility',
+        'Handling common objections before they are even raised',
       ],
     },
     {
       num: '05',
-      title: 'Facebook Client Hunting',
-      icon: Facebook,
-      color: 'from-sky-400 to-blue-600',
-      borderColor: 'hover:border-sky-500/40',
+      title: 'AI Prompts for Client Research & Copy',
+      icon: Bot,
+      color: 'from-pink-400 to-rose-600',
       bullets: [
-        'Mining niche business groups & international communities',
-        'Approaching active business pages with value audits',
-        'Positioning yourself as a problem solver in groups',
-        'Direct messaging etiquette that sparks genuine discussions',
+        'Prompt systems to generate tailored company audits in 60s',
+        'Extracting pain points from client website code & ads',
+        'Generating hyper-personalized video pitch scripts',
+        'Refining proposal tone to match Western corporate style',
       ],
     },
     {
       num: '06',
-      title: 'Cold Email Masterclass',
-      icon: Mail,
-      color: 'from-purple-400 to-indigo-600',
-      borderColor: 'hover:border-purple-500/40',
-      bullets: [
-        'Targeted B2B prospecting & verified email extraction',
-        'High-open subject line formulas proven in 2026',
-        'The 75-word concise first email structure',
-        'Strategic 4-stage follow-up sequence timing',
-        'Hyper-personalized compliment & audit hooks',
-      ],
-    },
-    {
-      num: '07',
-      title: 'AI Prompts Vault',
-      icon: Bot,
-      color: 'from-pink-400 to-rose-500',
-      borderColor: 'hover:border-pink-500/40',
-      bullets: [
-        'Company & industry research prompt templates',
-        'Upwork & Fiverr custom proposal generation prompts',
-        'Personalized LinkedIn & cold email drafting prompts',
-        'Client follow-up & objection handling AI prompts',
-      ],
-    },
-    {
-      num: '08',
-      title: 'Proposal & Message Scripts',
-      icon: FileCode,
-      color: 'from-amber-400 to-orange-500',
-      borderColor: 'hover:border-amber-500/40',
-      bullets: [
-        'Ready-to-use plug-and-play outreach scripts',
-        'Niche-specific templates (Web, Design, Video, Marketing)',
-        'Breakup email templates that get surprising replies',
-        'Re-engagement scripts for past inactive clients',
-      ],
-    },
-    {
-      num: '09',
-      title: 'Pricing & Communication',
-      icon: DollarSign,
-      color: 'from-emerald-300 to-teal-400',
-      borderColor: 'hover:border-teal-500/40',
-      bullets: [
-        'Transitioning from low hourly rates to value-based pricing',
-        'How to quote fixed prices without getting underpaid',
-        'Handling price objections like a seasoned professional',
-        'Payment terms, milestone structures & contracts',
-      ],
-    },
-    {
-      num: '10',
-      title: 'Discovery Call Guidance',
+      title: 'Discovery Calls, Pricing & Scope Protection',
       icon: PhoneCall,
-      color: 'from-violet-400 to-purple-600',
-      borderColor: 'hover:border-violet-500/40',
+      color: 'from-amber-400 to-orange-500',
       bullets: [
-        '15-minute qualification call roadmap & questions',
-        'Diagnosing business pain points on Zoom/Google Meet',
-        'Presenting your solution with authority & calm confidence',
-        'Closing the deal smoothly on the call',
-      ],
-    },
-    {
-      num: '11',
-      title: 'Scam Client Detection',
-      icon: ShieldAlert,
-      color: 'from-rose-400 to-red-600',
-      borderColor: 'hover:border-rose-500/40',
-      bullets: [
-        '12 unmistakable red flags of fraudulent clients',
-        'Telegram & outside payment scam avoidance checklist',
-        'Recognizing fake job posts and identity thieves',
-        'Protecting your work, accounts, and valuable time',
-      ],
-    },
-    {
-      num: '12',
-      title: '30-Day Client Hunting Plan',
-      icon: CalendarCheck2,
-      color: 'from-cyan-400 to-indigo-500',
-      borderColor: 'hover:border-cyan-500/40',
-      bullets: [
-        'Week 1: Positioning, profile revamp & AI tool setup',
-        'Week 2: 50 targeted prospects & customized first contact',
-        'Week 3: Systematic follow-ups & discovery call booking',
-        'Week 4: Proposal delivery, negotiation & closing retainers',
+        'Exact questions to unearth true client budget on Zoom calls',
+        'Value-based pricing vs. hourly rate traps',
+        'One-page scope agreement template that prevents scope creep',
+        'Milestone payment security and international payout setup',
       ],
     },
   ];
 
+  const metaAdsModules = [
+    {
+      num: '01',
+      title: 'Foundations & Meta Auction Mechanics',
+      icon: Cpu,
+      color: 'from-purple-400 to-indigo-500',
+      bullets: [
+        'How Meta calculates Total Value: (Bid × Action Rate) + User Value',
+        'Understanding CPM dynamics across Dhaka vs. Outside Dhaka',
+        'Algorithmic quality scores and how to earn CPM discounts',
+        'Avoiding ad account bans and restricted payment loops in BD',
+      ],
+    },
+    {
+      num: '02',
+      title: 'Measurement & Conversions API (CAPI)',
+      icon: Target,
+      color: 'from-blue-400 to-cyan-500',
+      bullets: [
+        'Pixel event setup with server-side CAPI deduplication',
+        'Overcoming iOS 14.5+ attribution loss and browser ad blockers',
+        'Catalog feed integration for dynamic product ads (DPA)',
+        'Event Quality Match score optimization above 8.5/10',
+      ],
+    },
+    {
+      num: '03',
+      title: 'Audience Architecture & Advantage+ Campaigns',
+      icon: Compass,
+      color: 'from-emerald-400 to-teal-500',
+      bullets: [
+        'Broad targeting vs. Interest clusters in Bangladesh',
+        'When and how to use Advantage+ Shopping Campaigns (ASC)',
+        'Exclusion setups that stop wasting ad budget on existing buyers',
+        'Local geographic segmentation for Courier hub efficiency',
+      ],
+    },
+    {
+      num: '04',
+      title: '20 Bangla Hooks & Conversion Copywriting',
+      icon: FileText,
+      color: 'from-pink-400 to-purple-600',
+      bullets: [
+        '20 proven Bangla hooks across Curiosity, FOMO & Problem angles',
+        '10 primary-text formulas engineered for Bangladeshi shoppers',
+        '10 headline blueprints tested for high click-through rates (CTR)',
+        'Visual creative layout rules that increase 3-second hook rate',
+      ],
+    },
+    {
+      num: '05',
+      title: 'Cash-on-Delivery (COD) Math & Unit Margins',
+      icon: Calculator,
+      color: 'from-amber-400 to-orange-500',
+      bullets: [
+        'Courier return cost calculation & parcel cancellation buffers',
+        'True Breakeven ROAS formula accounting for failed deliveries',
+        'Pre-dispatch phone call verification scripts to slash returns',
+        'Net profit tracking spreadsheet structure for local e-commerce',
+      ],
+    },
+    {
+      num: '06',
+      title: 'Dynamic Creative Testing & 30-Day Scale Roadmap',
+      icon: TrendingUp,
+      color: 'from-cyan-400 to-emerald-500',
+      bullets: [
+        'The 3:2:2 Dynamic Creative Testing (DCT) sandbox setup',
+        'Kill & scale decision rules based on spend-to-CPA ratios',
+        'Horizontal scaling vs. vertical budget increases without fatigue',
+        'Step-by-step 30-day campaign execution checklist',
+      ],
+    },
+  ];
+
+  const currentModules = activeTab === 'client-hunting' ? clientHuntingModules : metaAdsModules;
+
   return (
-    <section id="whats-inside" className="py-24 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
-            Curriculum Breakdown
+    <section id="curriculum" className="py-20 sm:py-28 relative overflow-hidden bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Heading */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
+            <span>Execution Curriculum</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
-            What's Inside The 40-Page Toolkit
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+            What's Inside the Guides?
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg">
-            A comprehensive, no-fluff playbook covering the complete client hunting journey from research to closing.
+          <p className="mt-4 text-base sm:text-lg text-slate-300">
+            Explore the exact frameworks, chapters, and templates contained inside each playbook.
           </p>
+
+          {/* Interactive Playbook Tabs */}
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <button
+              type="button"
+              onClick={() => setActiveTab('client-hunting')}
+              className={`px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                activeTab === 'client-hunting'
+                  ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/25 scale-105'
+                  : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              <span>AI Client Hunting Toolkit</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-950/20 font-mono">40 Pgs</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('meta-ads')}
+              className={`px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-2 ${
+                activeTab === 'meta-ads'
+                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/25 scale-105'
+                  : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              <span>Meta Ads Blueprint 2026</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 font-mono">53 Pgs</span>
+            </button>
+          </div>
         </div>
 
-        {/* 12 Feature Cards Grid */}
+        {/* Modules Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((m) => {
-            const Icon = m.icon;
+          {currentModules.map((mod) => {
+            const Icon = mod.icon;
             return (
               <div
-                key={m.num}
-                className={`glass-card p-6 rounded-2xl flex flex-col justify-between border-white/5 ${m.borderColor} relative group overflow-hidden`}
+                key={mod.num}
+                className="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 flex flex-col justify-between hover:border-slate-700 transition-all duration-300 group"
               >
                 <div>
+                  {/* Top Bar with Number & Icon */}
                   <div className="flex items-center justify-between mb-5">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${m.color} flex items-center justify-center text-white shadow-md`}>
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-xs font-bold text-slate-400 tracking-wider">
-                      MODULE {m.num}
+                    <span className="font-mono text-xs font-black text-slate-400 tracking-wider">
+                      CHAPTER {mod.num}
                     </span>
+                    <div
+                      className={`w-10 h-10 rounded-xl bg-gradient-to-br ${mod.color} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
-                    {m.title}
+                  {/* Module Title */}
+                  <h3 className="text-lg font-bold text-white mb-4 leading-snug">
+                    {mod.title}
                   </h3>
 
-                  <ul className="space-y-2 mb-6">
-                    {m.bullets.map((b, i) => (
-                      <li key={i} className="text-xs text-slate-300 flex items-start gap-2 leading-relaxed">
-                        <span className="text-cyan-400 font-bold mt-0.5">•</span>
-                        <span>{b}</span>
-                      </li>
+                  {/* Bullet Points */}
+                  <div className="space-y-2.5">
+                    {mod.bullets.map((b, bIdx) => (
+                      <div key={bIdx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-300">
+                        <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                        <span className="leading-snug">{b}</span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-semibold text-slate-400">
-                  <span>Practical Guide</span>
-                  <span className="text-cyan-400 group-hover:underline">Actionable Steps →</span>
+                  </div>
                 </div>
               </div>
             );

@@ -33,6 +33,7 @@ export interface CreateOrderRequest {
   name: string;
   email: string;
   phone: string;
+  product_id?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -44,6 +45,8 @@ export interface CreateOrderRequest {
 export interface CreateOrderResponse {
   success: boolean;
   order_id: string;
+  product_id: string;
+  product_name: string;
   amount: number;
   currency: string;
   bkash_number: string;
@@ -58,11 +61,20 @@ export interface SubmitPaymentRequest {
   turnstile_token?: string;
 }
 
+export interface DownloadFileItem {
+  id: string;
+  title: string;
+  pages: number;
+  filename: string;
+  download_url: string;
+}
+
 export interface OrderStatusResponse {
   success: boolean;
   order: {
     order_id: string;
     name: string;
+    product_id: string;
     product_name: string;
     amount: number;
     currency: string;
@@ -73,6 +85,7 @@ export interface OrderStatusResponse {
     created_at: string;
     approved_at: string | null;
     download_url?: string;
+    download_files?: DownloadFileItem[];
     download_expires_at?: string | null;
     download_count?: number;
     max_downloads?: number;
@@ -105,4 +118,18 @@ export interface ProductConfig {
   downloadExpiryHours: number;
   maxDownloads: number;
   supportHoursMsg: string;
+}
+
+export interface ReviewItem {
+  id: string;
+  author: string;
+  role: string;
+  companyOrLocation: string;
+  rating: number;
+  date: string;
+  productSlug: string;
+  headline: string;
+  comment: string;
+  verified: boolean;
+  metricBadge?: string;
 }

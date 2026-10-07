@@ -54,7 +54,7 @@ export const MobileStickyCta: React.FC<MobileStickyCtaProps> = ({
           className="flex-1 py-3 px-5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 shadow-md shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-95 transition-transform"
         >
           <Sparkles className="w-4 h-4 text-cyan-200" />
-          <span>Get Toolkit — ৳{price}</span>
+          <span>Get Playbooks — ৳299</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

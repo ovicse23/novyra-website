@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 840" width="600" height="840" fill="#0B1220">
+  <defs>
+    <filter id="blur6" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="7" />
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="600" height="840" rx="16" fill="#0A0F1D" stroke="#1E293B" stroke-width="2" />
+
+  <rect x="0" y="0" width="600" height="64" fill="#070B17" />
+  <text x="32" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="16" fill="#A855F7" letter-spacing="3">NOVYRA</text>
+  <text x="125" y="38" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#64748B" letter-spacing="1">ROADMAP &amp; EXECUTION</text>
+  <text x="500" y="38" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#94A3B8">PAGE 48/53</text>
+  <line x1="0" y1="64" x2="600" y2="64" stroke="#1E293B" stroke-width="1" />
+
+  <text x="40" y="108" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#8B5CF6" letter-spacing="2">ACTION PROTOCOL • SCALING</text>
+  <text x="40" y="142" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="23" fill="#FFFFFF">30-DAY META ADS EXECUTION ROADMAP</text>
+
+  <rect x="40" y="180" width="520" height="280" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1.5" />
+  <rect x="40" y="180" width="520" height="38" rx="12" fill="#1E293B" />
+  <text x="60" y="205" font-family="'Inter', sans-serif" font-weight="800" font-size="12" fill="#38BDF8">PHASED IMPLEMENTATION TIMELINE</text>
+
+  <g transform="translate(60, 240)">
+    <rect x="0" y="0" width="60" height="24" rx="6" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="30" y="16" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#C084FC" text-anchor="middle">DAYS 1-7</text>
+    <text x="75" y="16" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Infrastructure &amp; CAPI Deduplication Setup</text>
+    <text x="75" y="34" font-family="'Inter', sans-serif" font-size="11" fill="#94A3B8">Catalog feed setup, courier API integration, and baseline pixel verification.</text>
+  </g>
+
+  <g transform="translate(60, 305)">
+    <rect x="0" y="0" width="60" height="24" rx="6" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="30" y="16" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#C084FC" text-anchor="middle">DAYS 8-15</text>
+    <text x="75" y="16" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Creative Angle Testing &amp; Hook Discovery</text>
+    <text x="75" y="34" font-family="'Inter', sans-serif" font-size="11" fill="#94A3B8">Deploy 4 DCT batches using the 20 Bangla hooks. Identify top 2 winners.</text>
+  </g>
+
+  <g transform="translate(60, 370)">
+    <rect x="0" y="0" width="60" height="24" rx="6" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="30" y="16" font-family="'Inter', sans-serif" font-weight="800" font-size="11" fill="#C084FC" text-anchor="middle">DAYS 16-30</text>
+    <text x="75" y="16" font-family="'Inter', sans-serif" font-weight="700" font-size="13" fill="#FFFFFF">Horizontal Scaling &amp; Advantage+ Expansion</text>
+    <text x="75" y="34" font-family="'Inter', sans-serif" font-size="11" fill="#94A3B8">Graduate winning creatives to CBO scaling campaign; enforce COD verification bot.</text>
+  </g>
+
+  <g transform="translate(40, 490)">
+    <rect x="0" y="0" width="520" height="260" rx="12" fill="#0B1220" stroke="#8B5CF6" stroke-dasharray="4 4" stroke-width="1.5" />
+    <text x="25" y="32" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC">DAILY 15-MINUTE OPTIMIZATION CHECKLIST</text>
+    <g filter="url(#blur6)" opacity="0.65" transform="translate(25, 45)">
+      <text x="0" y="20" font-family="'Inter', sans-serif" font-size="14" fill="#FFFFFF">Step 1: Check frequency on retargeting sets (&gt; 2.8 = ad fatigue)...</text>
+      <rect x="0" y="35" width="470" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="58" width="430" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="81" width="450" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="104" width="390" height="14" rx="3" fill="#475569" />
+      <rect x="0" y="132" width="460" height="18" rx="4" fill="#8B5CF6" opacity="0.4" />
+      <rect x="0" y="160" width="320" height="14" rx="3" fill="#475569" />
+    </g>
+    <rect x="160" y="180" width="200" height="36" rx="8" fill="#1E1B4B" stroke="#8B5CF6" />
+    <text x="260" y="203" font-family="'Inter', sans-serif" font-weight="700" font-size="12" fill="#C084FC" text-anchor="middle">LOCKED CHAPTER CONTENT</text>
+  </g>
+
+  <text x="300" y="800" font-family="'Inter', sans-serif" font-weight="600" font-size="11" fill="#475569" text-anchor="middle">NOVYRA PROPRIETARY BLUEPRINT • CONFIDENTIAL</text>
+</svg>
