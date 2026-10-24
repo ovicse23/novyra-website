@@ -6,6 +6,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { GEMINI_PRO_PRODUCT } from '../../shared/products';
+import { toBengaliNumber } from '../lib/format';
 import type { StockInfo } from '../../shared/types';
 
 interface GeminiProSectionProps {
@@ -64,16 +65,16 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
               </span>
               <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase">
                 {currentStock.isSoldOut ? (
-                  <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {currentStock.totalStock}/{currentStock.totalStock} বিক্রি সম্পন্ন</span>
+                  <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {toBengaliNumber(currentStock.totalStock)}/{toBengaliNumber(currentStock.totalStock)} বিক্রি সম্পন্ন</span>
                 ) : (
                   <span>
-                    🔥 সীমিত স্টক: <strong className="text-rose-400">{currentStock.totalSold}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{currentStock.remaining}টি বাকি</strong>
+                    🔥 সীমিত স্টক: <strong className="text-rose-400">{toBengaliNumber(currentStock.totalSold)}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{toBengaliNumber(currentStock.remaining)}টি বাকি</strong>
                   </span>
                 )}
               </span>
             </div>
             <span className="text-xs font-bold text-slate-400">
-              মোট কোটা: {currentStock.totalStock}টি
+              মোট কোটা: {toBengaliNumber(currentStock.totalStock)}টি
             </span>
           </div>
 
@@ -90,12 +91,12 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
           </div>
 
           <div className="mt-2.5 flex items-center justify-between text-xs text-slate-400">
-            <span>{currentStock.totalSold} Sold ({percent}%)</span>
+            <span>{toBengaliNumber(currentStock.totalSold)}টি বিক্রি সম্পন্ন ({toBengaliNumber(percent)}%)</span>
             {currentStock.isSoldOut ? (
               <span className="text-rose-400 font-bold">পরবর্তী ব্যাচ শীঘ্রই যোগ করা হবে</span>
             ) : (
               <span className="text-amber-300 font-bold animate-pulse">
-                আর মাত্র {currentStock.remaining}টি সেল হলেই অফারটি স্টক আউট হবে
+                লিমিটেড স্টক অ্যাভেইলেবল (Limited Stock Available)
               </span>
             )}
           </div>
@@ -275,7 +276,7 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
                   <span>
                     {currentStock.isSoldOut
                       ? 'স্টক শেষ (Sold Out)'
-                      : `এখনই অর্ডার করুন — ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                      : `এখনই অর্ডার করুন — ৳৩৯৯ (মাত্র ${toBengaliNumber(currentStock.remaining)}টি বাকি)`}
                   </span>
                 </button>
 

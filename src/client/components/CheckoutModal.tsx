@@ -18,6 +18,7 @@ import {
   trackPaymentProofSubmitted,
 } from '../lib/analytics';
 import type { PaymentMethod, StockInfo } from '../../shared/types';
+import { toBengaliNumber } from '../lib/format';
 import {
   PRODUCTS,
   BUNDLE_PRODUCT,
@@ -299,11 +300,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       <span className="text-cyan-300">Gemini Pro 18 Months Personal</span>
                       {geminiStock.isSoldOut ? (
                         <span className="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-black uppercase">
-                          SOLD OUT ({geminiStock.totalStock}/{geminiStock.totalStock})
+                          স্টক আউট ({toBengaliNumber(geminiStock.totalStock)}/{toBengaliNumber(geminiStock.totalStock)})
                         </span>
                       ) : (
                         <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-rose-500 to-amber-500 text-white text-[10px] font-black uppercase animate-pulse">
-                          ONLY {geminiStock.remaining} LEFT
+                          🔥 মাত্র {toBengaliNumber(geminiStock.remaining)}টি বাকি ({toBengaliNumber(geminiStock.totalSold)}টি বিক্রি)
                         </span>
                       )}
                     </div>

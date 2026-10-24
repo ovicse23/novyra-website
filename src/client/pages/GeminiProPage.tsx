@@ -11,6 +11,7 @@ import {
 import { GEMINI_PRO_PRODUCT } from '../../shared/products';
 import { CheckoutModal } from '../components/CheckoutModal';
 import { Footer } from '../components/Footer';
+import { toBengaliNumber } from '../lib/format';
 import type { ProductConfig, StockInfo } from '../../shared/types';
 
 interface GeminiProPageProps {
@@ -171,16 +172,16 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                   </span>
                   <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase">
                     {currentStock.isSoldOut ? (
-                      <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {currentStock.totalStock}/{currentStock.totalStock} বিক্রি সম্পন্ন</span>
+                      <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {toBengaliNumber(currentStock.totalStock)}/{toBengaliNumber(currentStock.totalStock)} বিক্রি সম্পন্ন</span>
                     ) : (
                       <span>
-                        🔥 সীমিত স্টক: <strong className="text-rose-400">{currentStock.totalSold}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{currentStock.remaining}টি বাকি</strong>
+                        🔥 সীমিত স্টক: <strong className="text-rose-400">{toBengaliNumber(currentStock.totalSold)}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{toBengaliNumber(currentStock.remaining)}টি বাকি</strong>
                       </span>
                     )}
                   </span>
                 </div>
                 <span className="text-xs font-bold text-slate-400">
-                  মোট কোটা: {currentStock.totalStock}টি
+                  মোট কোটা: {toBengaliNumber(currentStock.totalStock)}টি
                 </span>
               </div>
 
@@ -197,12 +198,12 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
               </div>
 
               <div className="mt-2.5 flex items-center justify-between text-xs text-slate-400">
-                <span>{currentStock.totalSold} Sold ({percent}%)</span>
+                <span>{toBengaliNumber(currentStock.totalSold)}টি বিক্রি সম্পন্ন ({toBengaliNumber(percent)}%)</span>
                 {currentStock.isSoldOut ? (
                   <span className="text-rose-400 font-bold">পরবর্তী ব্যাচ শীঘ্রই যোগ করা হবে</span>
                 ) : (
                   <span className="text-amber-300 font-bold animate-pulse">
-                    আর মাত্র {currentStock.remaining}টি অর্ডার পেলেই স্টক শেষ হয়ে যাবে
+                    লিমিটেড স্টক অ্যাভেইলেবল (Limited Stock Available)
                   </span>
                 )}
               </div>
@@ -238,7 +239,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                   <span>
                     {currentStock.isSoldOut
                       ? 'স্টক শেষ (Sold Out)'
-                      : `এখনই সাবস্ক্রিপশন নিন — ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                      : `এখনই সাবস্ক্রিপশন নিন — ৳৩৯৯ (মাত্র ${toBengaliNumber(currentStock.remaining)}টি বাকি)`}
                   </span>
                 </button>
               </div>
@@ -623,7 +624,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                 <span>
                   {currentStock.isSoldOut
                     ? 'স্টক শেষ (Sold Out)'
-                    : `সাবস্ক্রিপশন নিন — মাত্র ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                    : `সাবস্ক্রিপশন নিন — মাত্র ৳৩৯৯ (মাত্র ${toBengaliNumber(currentStock.remaining)}টি বাকি)`}
                 </span>
               </button>
 
