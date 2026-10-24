@@ -24,6 +24,10 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
   const [modalOpen, setModalOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  React.useEffect(() => {
+    document.title = 'Gemini Pro 18 Months Personal — 5TB Google One Cloud & AI Suite | Novyra';
+  }, []);
+
   const currentStock = stock || config?.geminiStock || {
     totalStock: 100,
     baseSold: 92,

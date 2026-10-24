@@ -100,6 +100,24 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  useEffect(() => {
+    if (pathname.startsWith('/admin')) {
+      document.title = 'Admin Portal | Novyra';
+    } else if (pathname.startsWith('/order')) {
+      document.title = 'Track Order & Activation Status | Novyra';
+    } else if (pathname === '/privacy-policy') {
+      document.title = 'Privacy Policy | Novyra';
+    } else if (pathname === '/terms') {
+      document.title = 'Terms of Service | Novyra';
+    } else if (pathname === '/refund-policy') {
+      document.title = 'Refund & Replacement Policy | Novyra';
+    } else if (pathname === '/gemini-pro' || pathname === '/gemini-ai-pro') {
+      document.title = 'Gemini Pro 18 Months Personal — 5TB Google One Cloud & AI Suite | Novyra';
+    } else if (pathname === '/') {
+      document.title = 'Novyra — Practical Digital Playbooks for High-Performing Professionals';
+    }
+  }, [pathname]);
+
   const handleOpenCheckout = (productId?: string) => {
     if (productId) {
       setSelectedProductId(productId);
