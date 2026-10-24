@@ -115,6 +115,15 @@ export interface AdminOrdersResponse {
   orders: Order[];
 }
 
+export interface StockInfo {
+  totalStock: number;
+  baseSold: number;
+  currentSales: number;
+  totalSold: number;
+  remaining: number;
+  isSoldOut: boolean;
+}
+
 export interface ProductConfig {
   slug: string;
   name: string;
@@ -126,6 +135,7 @@ export interface ProductConfig {
   downloadExpiryHours: number;
   maxDownloads: number;
   supportHoursMsg: string;
+  geminiStock?: StockInfo;
 }
 
 export interface ReviewItem {

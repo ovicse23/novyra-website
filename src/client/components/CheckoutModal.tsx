@@ -17,7 +17,7 @@ import {
   trackPaymentInstructionsViewed,
   trackPaymentProofSubmitted,
 } from '../lib/analytics';
-import type { PaymentMethod } from '../../shared/types';
+import type { PaymentMethod, StockInfo } from '../../shared/types';
 import {
   PRODUCTS,
   BUNDLE_PRODUCT,
@@ -34,6 +34,7 @@ interface CheckoutModalProps {
   bkashNumber?: string;
   rocketNumber?: string;
   turnstileSiteKey?: string;
+  stock?: StockInfo;
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({
@@ -43,6 +44,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   bkashNumber = '01638002708',
   rocketNumber = '016380027089',
   turnstileSiteKey: _turnstileSiteKey = '',
+  stock,
 }) => {
   // Wizard steps: 1 = Order info, 2 = Payment Instructions, 3 = Submit Txn, 4 = Success/Pending
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -78,6 +80,16 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   if (!isOpen) return null;
 
+  const geminiStock = stock || {
+    totalStock: 100,
+    baseSold: 92,
+    currentSales: 0,
+    totalSold: 92,
+    remaining: 8,
+    isSoldOut: false,
+  };
+  const isSelectedGeminiSoldOut = selectedProductId === GEMINI_PRO_PRODUCT.id && geminiStock.isSoldOut;
+
   const currentPrice = getProductPrice(selectedProductId);
   const currentTitle = getProductTitle(selectedProductId);
 
@@ -85,6 +97,11 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const handleCreateOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
+
+    if (isSelectedGeminiSoldOut) {
+      setErrorMessage('Gemini Pro 18 Months Personal is currently sold out. Please select another package.');
+      return;
+    }
 
     if (!name.trim()) {
       setErrorMessage('Please enter your full name.');
@@ -278,11 +295,17 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     )}
                   </div>
                   <div>
-                    <div className="text-xs sm:text-sm font-bold flex items-center gap-2">
+                    <div className="text-xs sm:text-sm font-bold flex flex-wrap items-center gap-1.5 sm:gap-2">
                       <span className="text-cyan-300">Gemini Pro 18 Months Personal</span>
-                      <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-rose-500 to-amber-500 text-white text-[10px] font-black uppercase">
-                        HOT
-                      </span>
+                      {geminiStock.isSoldOut ? (
+                        <span className="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-black uppercase">
+                          SOLD OUT ({geminiStock.totalStock}/{geminiStock.totalStock})
+                        </span>
+                      ) : (
+                        <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-rose-500 to-amber-500 text-white text-[10px] font-black uppercase animate-pulse">
+                          ONLY {geminiStock.remaining} LEFT
+                        </span>
+                      )}
                     </div>
                     <div className="text-[11px] text-slate-400">
                       5TB Google One Cloud • Gemini 3.1 &amp; 4 Argon • Veo AI
@@ -420,14 +443,20 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3.5 rounded-xl font-extrabold text-sm sm:text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all"
+                disabled={isSubmitting || isSelectedGeminiSoldOut}
+                className={`w-full py-3.5 rounded-xl font-extrabold text-sm sm:text-base text-white flex items-center justify-center gap-2 transition-all ${
+                  isSelectedGeminiSoldOut
+                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                    : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 active:scale-95'
+                }`}
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span>Creating Order...</span>
                   </>
+                ) : isSelectedGeminiSoldOut ? (
+                  <span>স্টক শেষ (Sold Out) — Select Another Package</span>
                 ) : (
                   <>
                     <span>Proceed to Payment (৳{currentPrice})</span>

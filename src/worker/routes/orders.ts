@@ -14,6 +14,7 @@ import {
   checkTransactionIdExists,
   updateOrderPayment,
   incrementDownloadCount,
+  getGeminiStock,
 } from '../services/db.ts';
 import { uploadPaymentProof, getProductPdf } from '../services/storage.ts';
 import type { PaymentMethod, DownloadFileItem } from '../../shared/types.ts';
@@ -91,6 +92,17 @@ ordersRoute.post('/', async (c) => {
   }
   const amount = getProductPrice(productId);
   const productName = getProductTitle(productId);
+
+  // Check stock for Gemini Pro launch batch
+  if (productId === 'gemini-pro-18m') {
+    const stock = await getGeminiStock(c.env.DB);
+    if (stock.isSoldOut) {
+      return c.json({
+        success: false,
+        error: 'Sorry! The launch batch for Gemini Pro 18 Months is currently sold out (100/100 slots claimed). Please contact WhatsApp support to join the priority waitlist for the next batch.',
+      }, 400);
+    }
+  }
 
   // Generate unique order ID
   let orderId = generateOrderId();

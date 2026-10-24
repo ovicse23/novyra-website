@@ -46,6 +46,14 @@ export const App: React.FC = () => {
     downloadExpiryHours: 72,
     maxDownloads: 5,
     supportHoursMsg: 'Normally within 5–30 minutes during support hours.',
+    geminiStock: {
+      totalStock: 100,
+      baseSold: 92,
+      currentSales: 0,
+      totalSold: 92,
+      remaining: 8,
+      isSoldOut: false,
+    },
   });
 
   // Routing check based on window.location.pathname
@@ -69,6 +77,7 @@ export const App: React.FC = () => {
             downloadExpiryHours: data.config.downloadExpiryHours || prev.downloadExpiryHours,
             maxDownloads: data.config.maxDownloads || prev.maxDownloads,
             supportHoursMsg: data.config.supportHoursMsg || prev.supportHoursMsg,
+            geminiStock: data.config.geminiStock || prev.geminiStock,
           }));
 
           // Initialize analytics with configured IDs
@@ -125,6 +134,7 @@ export const App: React.FC = () => {
         <GeminiProPage
           onOpenCheckout={(pid) => handleOpenCheckout(pid || GEMINI_PRO_PRODUCT.id)}
           config={config}
+          stock={config.geminiStock}
         />
         <CheckoutModal
           isOpen={modalOpen}
@@ -133,6 +143,7 @@ export const App: React.FC = () => {
           price={config.price}
           bkashNumber={config.bkashNumber}
           rocketNumber={config.rocketNumber}
+          stock={config.geminiStock}
         />
       </>
     );
@@ -156,7 +167,10 @@ export const App: React.FC = () => {
         />
 
         {/* Gemini Pro 18 Months Featured Hot Section */}
-        <GeminiProSection onOpenCheckout={handleOpenCheckout} />
+        <GeminiProSection
+          onOpenCheckout={handleOpenCheckout}
+          stock={config.geminiStock}
+        />
 
         {/* Product Catalog / Playbook Library */}
         <ProductCatalog
@@ -225,6 +239,7 @@ export const App: React.FC = () => {
         price={config.price}
         bkashNumber={config.bkashNumber}
         rocketNumber={config.rocketNumber}
+        stock={config.geminiStock}
       />
     </div>
   );

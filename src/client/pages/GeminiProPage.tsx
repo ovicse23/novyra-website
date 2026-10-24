@@ -11,18 +11,30 @@ import {
 import { GEMINI_PRO_PRODUCT } from '../../shared/products';
 import { CheckoutModal } from '../components/CheckoutModal';
 import { Footer } from '../components/Footer';
-import type { ProductConfig } from '../../shared/types';
+import type { ProductConfig, StockInfo } from '../../shared/types';
 
 interface GeminiProPageProps {
   onOpenCheckout: (productId?: string) => void;
   config?: ProductConfig;
+  stock?: StockInfo;
 }
 
-export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, config }) => {
+export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, config, stock }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  const currentStock = stock || config?.geminiStock || {
+    totalStock: 100,
+    baseSold: 92,
+    currentSales: 0,
+    totalSold: 92,
+    remaining: 8,
+    isSoldOut: false,
+  };
+  const percent = Math.min(100, Math.round((currentStock.totalSold / currentStock.totalStock) * 100));
+
   const handleOpenLocalCheckout = () => {
+    if (currentStock.isSoldOut) return;
     if (onOpenCheckout) {
       onOpenCheckout(GEMINI_PRO_PRODUCT.id);
     } else {
@@ -88,10 +100,15 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
           <button
             onClick={handleOpenLocalCheckout}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
+            disabled={currentStock.isSoldOut}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white transition-all ${
+              currentStock.isSoldOut
+                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-lg shadow-cyan-500/25 active:scale-95'
+            }`}
           >
             <Sparkles className="w-4 h-4 text-cyan-200" />
-            <span>অর্ডার করুন — ৳৩৯৯</span>
+            <span>{currentStock.isSoldOut ? 'স্টক শেষ (Sold Out)' : 'অর্ডার করুন — ৳৩৯৯'}</span>
           </button>
         </div>
       </header>
@@ -144,8 +161,55 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
               </span>
             </div>
 
+            {/* Scarcity / Stock Tracker Box */}
+            <div className="mt-8 max-w-2xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-950/40 via-purple-950/30 to-cyan-950/40 border border-rose-500/30 backdrop-blur-md shadow-xl text-left">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
+                  </span>
+                  <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase">
+                    {currentStock.isSoldOut ? (
+                      <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {currentStock.totalStock}/{currentStock.totalStock} বিক্রি সম্পন্ন</span>
+                    ) : (
+                      <span>
+                        🔥 সীমিত স্টক: <strong className="text-rose-400">{currentStock.totalSold}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{currentStock.remaining}টি বাকি</strong>
+                      </span>
+                    )}
+                  </span>
+                </div>
+                <span className="text-xs font-bold text-slate-400">
+                  মোট কোটা: {currentStock.totalStock}টি
+                </span>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="w-full h-3 rounded-full bg-slate-800 overflow-hidden relative p-0.5">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 ${
+                    currentStock.isSoldOut
+                      ? 'bg-rose-500'
+                      : 'bg-gradient-to-r from-cyan-500 via-purple-500 to-rose-500'
+                  }`}
+                  style={{ width: `${percent}%` }}
+                />
+              </div>
+
+              <div className="mt-2.5 flex items-center justify-between text-xs text-slate-400">
+                <span>{currentStock.totalSold} Sold ({percent}%)</span>
+                {currentStock.isSoldOut ? (
+                  <span className="text-rose-400 font-bold">পরবর্তী ব্যাচ শীঘ্রই যোগ করা হবে</span>
+                ) : (
+                  <span className="text-amber-300 font-bold animate-pulse">
+                    আর মাত্র {currentStock.remaining}টি অর্ডার পেলেই স্টক শেষ হয়ে যাবে
+                  </span>
+                )}
+              </div>
+            </div>
+
             {/* Price Box & CTA */}
-            <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-cyan-500/30 max-w-2xl mx-auto shadow-2xl backdrop-blur-md">
+            <div className="mt-6 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-cyan-500/30 max-w-2xl mx-auto shadow-2xl backdrop-blur-md">
               <div className="flex items-center justify-center gap-4">
                 <div className="text-4xl sm:text-5xl font-black text-cyan-300">
                   ৳৩৯৯
@@ -163,10 +227,19 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={handleOpenLocalCheckout}
-                  className="flex-1 py-4 px-6 rounded-2xl font-black text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/30 active:scale-95 transition-all flex items-center justify-center gap-2"
+                  disabled={currentStock.isSoldOut}
+                  className={`flex-1 py-4 px-6 rounded-2xl font-black text-base text-white transition-all flex items-center justify-center gap-2 ${
+                    currentStock.isSoldOut
+                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                      : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/30 active:scale-95'
+                  }`}
                 >
-                  <Sparkles className="w-5 h-5 text-cyan-200 animate-pulse" />
-                  <span>এখনই সাবস্ক্রিপশন নিন — ৳৩৯৯</span>
+                  <Sparkles className="w-5 h-5 text-cyan-200" />
+                  <span>
+                    {currentStock.isSoldOut
+                      ? 'স্টক শেষ (Sold Out)'
+                      : `এখনই সাবস্ক্রিপশন নিন — ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                  </span>
                 </button>
               </div>
 
@@ -539,10 +612,19 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={handleOpenLocalCheckout}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-2xl shadow-cyan-500/30 active:scale-95 transition-all flex items-center justify-center gap-2"
+                disabled={currentStock.isSoldOut}
+                className={`w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-base text-white transition-all flex items-center justify-center gap-2 ${
+                  currentStock.isSoldOut
+                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                    : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-2xl shadow-cyan-500/30 active:scale-95'
+                }`}
               >
                 <Sparkles className="w-5 h-5 text-cyan-200" />
-                <span>সাবস্ক্রিপশন নিন — মাত্র ৳৩৯৯</span>
+                <span>
+                  {currentStock.isSoldOut
+                    ? 'স্টক শেষ (Sold Out)'
+                    : `সাবস্ক্রিপশন নিন — মাত্র ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                </span>
               </button>
 
               <a

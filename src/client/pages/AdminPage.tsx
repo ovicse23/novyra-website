@@ -14,7 +14,7 @@ import {
   X,
   Download,
 } from 'lucide-react';
-import type { Order, AdminStats } from '../../shared/types';
+import type { Order, AdminStats, StockInfo } from '../../shared/types';
 
 export const AdminPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -32,6 +32,13 @@ export const AdminPage: React.FC = () => {
   });
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
+
+  // Gemini Stock State
+  const [stock, setStock] = useState<StockInfo | null>(null);
+  const [inputTotalStock, setInputTotalStock] = useState<number>(100);
+  const [inputBaseSold, setInputBaseSold] = useState<number>(92);
+  const [isUpdatingStock, setIsUpdatingStock] = useState(false);
+  const [stockSuccessMsg, setStockSuccessMsg] = useState<string | null>(null);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -99,16 +106,56 @@ export const AdminPage: React.FC = () => {
       if (search) params.set('search', search);
       if (statusFilter !== 'all') params.set('status', statusFilter);
 
-      const res = await fetch(`/api/admin/orders?${params.toString()}`);
-      const data = await res.json();
+      const [ordersRes, stockRes] = await Promise.all([
+        fetch(`/api/admin/orders?${params.toString()}`),
+        fetch('/api/admin/stock'),
+      ]);
+
+      const data = await ordersRes.json();
       if (data.success) {
         setStats(data.stats);
         setOrders(data.orders);
       }
+
+      const stockData = await stockRes.json();
+      if (stockData.success && stockData.stock) {
+        setStock(stockData.stock);
+        setInputTotalStock(stockData.stock.totalStock);
+        setInputBaseSold(stockData.stock.baseSold);
+      }
     } catch (err) {
-      console.error('Failed to load admin orders', err);
+      console.error('Failed to load admin orders or stock', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUpdateStock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdatingStock(true);
+    setStockSuccessMsg(null);
+    try {
+      const res = await fetch('/api/admin/stock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          totalStock: Number(inputTotalStock),
+          baseSold: Number(inputBaseSold),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to update stock');
+      }
+      setStock(data.stock);
+      setInputTotalStock(data.stock.totalStock);
+      setInputBaseSold(data.stock.baseSold);
+      setStockSuccessMsg(`Stock updated! Remaining: ${data.stock.remaining} (${data.stock.totalSold}/${data.stock.totalStock} sold)`);
+      setTimeout(() => setStockSuccessMsg(null), 5000);
+    } catch (err: any) {
+      alert(err.message || 'Error updating stock');
+    } finally {
+      setIsUpdatingStock(false);
     }
   };
 
@@ -283,6 +330,109 @@ export const AdminPage: React.FC = () => {
               <TrendingUp className="w-4 h-4 text-purple-400" />
             </div>
             <div className="text-2xl sm:text-3xl font-black text-purple-400">{stats.ordersToday}</div>
+          </div>
+        </div>
+
+        {/* Gemini Pro Inventory & Scarcity Manager */}
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900/90 via-slate-950 to-indigo-950/70 border border-cyan-500/30 shadow-2xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-800">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold text-[10px] uppercase tracking-wider">
+                  Live Scarcity Engine
+                </span>
+                {stock?.isSoldOut ? (
+                  <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-black text-[10px] uppercase">
+                    🔴 Sold Out
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-black text-[10px] uppercase">
+                    🟢 Active ({stock?.remaining ?? 8} Left)
+                  </span>
+                )}
+              </div>
+              <h2 className="text-xl font-black text-white mt-1">
+                Gemini Pro 18 Months — Stock &amp; Scarcity Manager
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Manage stock limits, simulated initial base sold count, and real website sales. When sales reach Total Stock, orders auto-close.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-4 text-xs">
+              <div className="text-right">
+                <span className="text-slate-400 block">Current Status</span>
+                <span className="text-sm font-black text-white">
+                  {stock?.totalSold ?? 92} / {stock?.totalStock ?? 100} Sold ({stock?.remaining ?? 8} Left)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {stockSuccessMsg && (
+            <div className="mb-4 p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>{stockSuccessMsg}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleUpdateStock} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">
+                Total Stock Limit
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={inputTotalStock}
+                onChange={(e) => setInputTotalStock(parseInt(e.target.value, 10) || 0)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-cyan-400"
+              />
+              <span className="text-[10px] text-slate-500 mt-1 block">
+                Total units before offer goes sold out (e.g. 100)
+              </span>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">
+                Base Sold (Marketing Count)
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={inputBaseSold}
+                onChange={(e) => setInputBaseSold(parseInt(e.target.value, 10) || 0)}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-cyan-400"
+              />
+              <span className="text-[10px] text-slate-500 mt-1 block">
+                Starting sold count (e.g. 92 so 8 are left)
+              </span>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+              <div className="text-[11px] text-slate-400">Live Website Sales</div>
+              <div className="text-base font-black text-cyan-400 mt-0.5">
+                +{stock?.currentSales ?? 0} Real Orders
+              </div>
+              <span className="text-[10px] text-slate-500 block">
+                Total Sold = {stock?.totalSold ?? 92}
+              </span>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={isUpdatingStock}
+                className="w-full py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 shadow-lg shadow-cyan-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+              >
+                {isUpdatingStock ? 'Saving...' : 'Save Stock Settings'}
+              </button>
+            </div>
+          </form>
+
+          {/* Quick instructions for user */}
+          <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <span>💡 <strong>Tip for Facebook Ads:</strong> Whenever you want to sell more, simply increase <strong>Total Stock Limit</strong> (e.g. to 150 or 200) and click <em>Save Stock Settings</em>.</span>
           </div>
         </div>
 

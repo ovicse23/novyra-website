@@ -13,6 +13,8 @@ import {
   getOrderByOrderId,
   approveOrder,
   rejectOrder,
+  getGeminiStock,
+  setSetting,
 } from '../services/db.ts';
 import { getPaymentProof } from '../services/storage.ts';
 
@@ -173,6 +175,30 @@ adminRoute.get('/proof/:orderId', async (c) => {
       'Cache-Control': 'private, max-age=3600',
     },
   });
+});
+
+// 8. Stock & Inventory Endpoints
+adminRoute.get('/stock', async (c) => {
+  if (!(await checkAdminAuth(c))) {
+    return c.json({ success: false, error: 'Unauthorized' }, 401);
+  }
+  const stock = await getGeminiStock(c.env.DB);
+  return c.json({ success: true, stock });
+});
+
+adminRoute.post('/stock', async (c) => {
+  if (!(await checkAdminAuth(c))) {
+    return c.json({ success: false, error: 'Unauthorized' }, 401);
+  }
+  const body = await c.req.json();
+  if (body.totalStock !== undefined) {
+    await setSetting(c.env.DB, 'gemini_total_stock', String(Math.max(0, parseInt(body.totalStock, 10) || 0)));
+  }
+  if (body.baseSold !== undefined) {
+    await setSetting(c.env.DB, 'gemini_base_sold', String(Math.max(0, parseInt(body.baseSold, 10) || 0)));
+  }
+  const stock = await getGeminiStock(c.env.DB);
+  return c.json({ success: true, stock });
 });
 
 export { adminRoute };

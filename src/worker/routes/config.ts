@@ -2,11 +2,14 @@ import { Hono } from 'hono';
 import type { Env } from '../config.ts';
 import { getConfig } from '../config.ts';
 import { PRODUCTS, BUNDLE_PRODUCT, GEMINI_PRO_PRODUCT } from '../../shared/products.ts';
+import { getGeminiStock } from '../services/db.ts';
 
 const configRoute = new Hono<{ Bindings: Env }>();
 
-configRoute.get('/', (c) => {
+configRoute.get('/', async (c) => {
   const cfg = getConfig(c.env);
+  const geminiStock = await getGeminiStock(c.env.DB);
+
   return c.json({
     success: true,
     config: {
@@ -23,6 +26,7 @@ configRoute.get('/', (c) => {
       turnstileSiteKey: cfg.turnstileSiteKey,
       metaPixelId: cfg.metaPixelId,
       ga4MeasurementId: cfg.ga4MeasurementId,
+      geminiStock,
       products: PRODUCTS.map((p) => ({
         id: p.id,
         slug: p.slug,

@@ -6,12 +6,24 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { GEMINI_PRO_PRODUCT } from '../../shared/products';
+import type { StockInfo } from '../../shared/types';
 
 interface GeminiProSectionProps {
   onOpenCheckout: (productId: string) => void;
+  stock?: StockInfo;
 }
 
-export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenCheckout }) => {
+export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenCheckout, stock }) => {
+  const currentStock = stock || {
+    totalStock: 100,
+    baseSold: 92,
+    currentSales: 0,
+    totalSold: 92,
+    remaining: 8,
+    isSoldOut: false,
+  };
+
+  const percent = Math.min(100, Math.round((currentStock.totalSold / currentStock.totalStock) * 100));
   return (
     <section id="gemini-pro" className="py-20 px-4 sm:px-6 relative overflow-hidden bg-slate-950/70 border-y border-white/10">
       {/* Background glow effects */}
@@ -39,6 +51,53 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
           <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-semibold">
             <ShieldCheck className="w-4 h-4 text-cyan-400" />
             <span>১০০% পার্সোনাল জিমেইল অ্যাকাউন্টে অফিসিয়াল এক্টিভেশন • ১৮ মাস গ্যারান্টি</span>
+          </div>
+        </div>
+
+        {/* Live Scarcity Stock Tracker Bar */}
+        <div className="max-w-3xl mx-auto mb-12 p-5 rounded-2xl bg-gradient-to-r from-slate-900/95 via-slate-950 to-slate-900/95 border border-rose-500/30 shadow-2xl relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500"></span>
+              </span>
+              <span className="text-xs sm:text-sm font-black text-white tracking-wide uppercase">
+                {currentStock.isSoldOut ? (
+                  <span className="text-rose-400">❌ ব্যাচ স্টক আউট • {currentStock.totalStock}/{currentStock.totalStock} বিক্রি সম্পন্ন</span>
+                ) : (
+                  <span>
+                    🔥 সীমিত স্টক: <strong className="text-rose-400">{currentStock.totalSold}টি বিক্রি</strong> • মাত্র <strong className="text-amber-300">{currentStock.remaining}টি বাকি</strong>
+                  </span>
+                )}
+              </span>
+            </div>
+            <span className="text-xs font-bold text-slate-400">
+              মোট কোটা: {currentStock.totalStock}টি
+            </span>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="w-full h-3 rounded-full bg-slate-800 overflow-hidden relative p-0.5">
+            <div
+              className={`h-full rounded-full transition-all duration-700 ${
+                currentStock.isSoldOut
+                  ? 'bg-rose-500'
+                  : 'bg-gradient-to-r from-cyan-500 via-purple-500 to-rose-500'
+              }`}
+              style={{ width: `${percent}%` }}
+            />
+          </div>
+
+          <div className="mt-2.5 flex items-center justify-between text-xs text-slate-400">
+            <span>{currentStock.totalSold} Sold ({percent}%)</span>
+            {currentStock.isSoldOut ? (
+              <span className="text-rose-400 font-bold">পরবর্তী ব্যাচ শীঘ্রই যোগ করা হবে</span>
+            ) : (
+              <span className="text-amber-300 font-bold animate-pulse">
+                আর মাত্র {currentStock.remaining}টি সেল হলেই অফারটি স্টক আউট হবে
+              </span>
+            )}
           </div>
         </div>
 
@@ -204,11 +263,20 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
-                  onClick={() => onOpenCheckout(GEMINI_PRO_PRODUCT.id)}
-                  className="px-6 py-3.5 rounded-xl font-black text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 active:scale-95 transition-all flex items-center justify-center gap-2"
+                  onClick={() => !currentStock.isSoldOut && onOpenCheckout(GEMINI_PRO_PRODUCT.id)}
+                  disabled={currentStock.isSoldOut}
+                  className={`px-6 py-3.5 rounded-xl font-black text-sm text-white flex items-center justify-center gap-2 transition-all ${
+                    currentStock.isSoldOut
+                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                      : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 active:scale-95'
+                  }`}
                 >
                   <Sparkles className="w-4 h-4 text-cyan-200" />
-                  <span>এখনই অর্ডার করুন — ৳৩৯৯</span>
+                  <span>
+                    {currentStock.isSoldOut
+                      ? 'স্টক শেষ (Sold Out)'
+                      : `এখনই অর্ডার করুন — ৳৩৯৯ (মাত্র ${currentStock.remaining}টি বাকি)`}
+                  </span>
                 </button>
 
                 <a

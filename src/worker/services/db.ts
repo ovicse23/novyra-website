@@ -1,4 +1,4 @@
-import type { Order, AdminStats, OrderStatus, PaymentMethod } from '../../shared/types.ts';
+import type { Order, AdminStats, OrderStatus, PaymentMethod, StockInfo } from '../../shared/types.ts';
 
 export async function createOrder(
   db: D1Database,
@@ -220,4 +220,57 @@ export async function getOrders(
 
   const res = await db.prepare(query).bind(...binds).all<Order>();
   return res.results || [];
+}
+
+export async function getSetting(db: D1Database, key: string, defaultValue = ''): Promise<string> {
+  try {
+    const res = await db.prepare('SELECT value FROM site_settings WHERE key = ? LIMIT 1').bind(key).first<{ value: string }>();
+    return res ? res.value : defaultValue;
+  } catch (e) {
+    return defaultValue;
+  }
+}
+
+export async function setSetting(db: D1Database, key: string, value: string): Promise<boolean> {
+  const query = `
+    INSERT INTO site_settings (key, value, updated_at)
+    VALUES (?, ?, datetime('now'))
+    ON CONFLICT(key) DO UPDATE SET
+      value = excluded.value,
+      updated_at = datetime('now');
+  `;
+  const res = await db.prepare(query).bind(key, value).run();
+  return res.success;
+}
+
+export async function getGeminiStock(db: D1Database): Promise<StockInfo> {
+  const totalStockStr = await getSetting(db, 'gemini_total_stock', '100');
+  const baseSoldStr = await getSetting(db, 'gemini_base_sold', '92');
+  const totalStock = parseInt(totalStockStr, 10) || 100;
+  const baseSold = parseInt(baseSoldStr, 10) || 92;
+
+  let currentSales = 0;
+  try {
+    const res = await db.prepare(`
+      SELECT COUNT(*) as count FROM orders
+      WHERE product_id IN ('gemini-pro-18m', 'gemini-pro')
+        AND status != 'rejected'
+    `).first<{ count: number }>();
+    currentSales = res?.count || 0;
+  } catch (e) {
+    currentSales = 0;
+  }
+
+  const totalSold = Math.min(totalStock, baseSold + currentSales);
+  const remaining = Math.max(0, totalStock - totalSold);
+  const isSoldOut = remaining <= 0;
+
+  return {
+    totalStock,
+    baseSold,
+    currentSales,
+    totalSold,
+    remaining,
+    isSoldOut,
+  };
 }
