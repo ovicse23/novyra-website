@@ -21,6 +21,7 @@ import type { PaymentMethod } from '../../shared/types';
 import {
   PRODUCTS,
   BUNDLE_PRODUCT,
+  GEMINI_PRO_PRODUCT,
   getProductPrice,
   getProductTitle,
 } from '../../shared/products';
@@ -251,8 +252,48 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             {/* Product Selector */}
             <div className="space-y-2 mb-5">
               <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
-                Choose Playbook Package:
+                Select Your Item or Package:
               </label>
+
+              {/* Gemini Pro 18 Months Featured Option */}
+              <button
+                type="button"
+                onClick={() => setSelectedProductId(GEMINI_PRO_PRODUCT.id)}
+                className={`w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
+                  selectedProductId === GEMINI_PRO_PRODUCT.id
+                    ? 'bg-gradient-to-r from-blue-950/60 via-purple-950/60 to-slate-900 border-cyan-400 text-white shadow-lg shadow-cyan-500/10'
+                    : 'bg-slate-950/70 border-slate-800 text-slate-300 hover:border-slate-700'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                      selectedProductId === GEMINI_PRO_PRODUCT.id
+                        ? 'border-cyan-400 bg-cyan-500'
+                        : 'border-slate-600'
+                    }`}
+                  >
+                    {selectedProductId === GEMINI_PRO_PRODUCT.id && (
+                      <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-bold flex items-center gap-2">
+                      <span className="text-cyan-300">Gemini Pro 18 Months Personal</span>
+                      <span className="px-1.5 py-0.5 rounded bg-gradient-to-r from-rose-500 to-amber-500 text-white text-[10px] font-black uppercase">
+                        HOT
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      5TB Google One Cloud • Gemini 3.1 &amp; 4 Argon • Veo AI
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-sm sm:text-base font-black text-cyan-300">৳1,499</div>
+                  <div className="text-[10px] text-slate-500 line-through">৳4,999</div>
+                </div>
+              </button>
 
               {/* Bundle Option */}
               <button
@@ -347,7 +388,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 text-sm focus:border-cyan-400 transition-colors"
                 />
                 <span className="text-[11px] text-slate-400 mt-1 block">
-                  Your PDF download link will be tied to this email.
+                  {selectedProductId === GEMINI_PRO_PRODUCT.id
+                    ? 'Your 18-month Gemini Pro & 5TB Google One invitation will be activated on this Gmail address.'
+                    : 'Your PDF download link will be tied to this email.'}
                 </span>
               </div>
 

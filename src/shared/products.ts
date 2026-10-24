@@ -364,6 +364,95 @@ export const REVIEWS: ReviewItem[] = [
   },
 ];
 
+export interface GeminiFeatureItem {
+  icon: string;
+  title: string;
+  tagline: string;
+  desc: string;
+}
+
+export interface GeminiProductItem {
+  id: string;
+  slug: string;
+  title: string;
+  shortTitle: string;
+  subtitle: string;
+  tagline: string;
+  description: string;
+  badge: string;
+  price: number;
+  regularPrice: number;
+  currency: string;
+  duration: string;
+  storage: string;
+  accentColor: 'indigo';
+  features: GeminiFeatureItem[];
+  highlights: string[];
+}
+
+export const GEMINI_PRO_PRODUCT: GeminiProductItem = {
+  id: 'gemini-pro-18m',
+  slug: 'gemini-pro',
+  title: 'Gemini Pro 18 Months Personal',
+  shortTitle: 'Gemini Pro 18M',
+  subtitle: 'একটি সাবস্ক্রিপশনেই আনলক করুন গুগল-এর সকল পাওয়ারফুল এআই টুলস ও ক্লাউড স্টোরেজ',
+  tagline: 'Google Flagship AI • 18 Months Personal Access',
+  description: 'Get full personal access to Google’s most advanced AI models and cloud ecosystem: Gemini 3.1 Pro & 4 Argon with 2M token context, 5TB Google One Cloud Storage, Veo 1080p Cinematic AI Video Generator, Flow AI Filmmaking & Imagen 3, 1,000+ monthly AI credits, and NotebookLM Pro Enhanced.',
+  badge: '🔥 HOT • 18 MONTHS EXCLUSIVE',
+  price: 1499,
+  regularPrice: 4999,
+  currency: 'BDT',
+  duration: '18 Months Guaranteed Validity',
+  storage: '5TB Official Personal Cloud Storage',
+  accentColor: 'indigo',
+  features: [
+    {
+      icon: '✨',
+      title: 'Gemini 3.1 Pro & 4 Argon',
+      tagline: 'Google-এর ফ্ল্যাগশিপ মডেল',
+      desc: '২ মিলিয়ন টোকেন মেমরি সহ আল্ট্রা-ফাস্ট রেসপন্স, ডিপ রিজনিং এবং অ্যাডভান্সড কোডিং সহায়তা।',
+    },
+    {
+      icon: '☁️',
+      title: '৫TB ক্লাউড স্টোরেজ',
+      tagline: 'Drive, Gmail ও Photos-এর জন্য',
+      desc: 'বিশাল ৫ টেরাবাইট পার্সোনাল অফিসিয়াল ক্লাউড স্টোরেজ, যেখানে সুরক্ষিত থাকবে আপনার সমস্ত ফাইল ও ব্যাকআপ।',
+    },
+    {
+      icon: '🎥',
+      title: 'Veo AI Video Generator',
+      tagline: 'সিনেমেটিক AI ভিডিও নির্মাণ',
+      desc: 'টেক্সট এবং ছবি থেকে আল্ট্রা সিনেম্যাটিক 1080p ফুল HD AI ভিডিও তৈরি করার অভাবনীয় সুবিধা।',
+    },
+    {
+      icon: '🎬',
+      title: 'Flow AI Filmmaking & Imagen 3',
+      tagline: 'মুভি ও শর্ট ফিল্ম স্টোরিবোর্ড',
+      desc: 'শট-বাই-শট ফুল স্টোরিবোর্ড জেনারেশন এবং আল্ট্রা-রিয়েলিস্টিক ফটোরিয়ালিস্টিক আর্ট জেনারেটর।',
+    },
+    {
+      icon: '⚡',
+      title: '1,000+ AI Credits / Month',
+      tagline: 'অটো রিচার্জেবল ক্রেডিট',
+      desc: 'প্রতি মাসে অটোমেটিক রিচার্জেবল হাই-প্রায়োরিটি ফাস্ট জেনারেশন ক্রেডিট ও প্রিমিয়াম প্রসেসিং।',
+    },
+    {
+      icon: '📚',
+      title: 'NotebookLM Pro Enhanced',
+      tagline: 'অ্যাডভান্সড রিসার্চ ও অডিও সামারি',
+      desc: 'রিসার্চ পেপার, বই বা বড় ডকুমেন্ট আপলোড করে নিমেষেই অডিও ডিসকাশন ও গভীর সারাংশ তৈরি।',
+    },
+  ],
+  highlights: [
+    '18 Months (1.5 Years) Guaranteed Active Duration',
+    'Direct Activation to your Personal Google Account (Gmail)',
+    'Full 5TB Google One Cloud Storage (Drive, Photos, Gmail)',
+    'Instant priority access to Gemini 3.1 Pro & 4 Argon',
+    'Full 1080p cinematic video with Google Veo',
+    'Official activation with replacement guarantee & dedicated support',
+  ],
+};
+
 export function getProductBySlug(slug: string): ProductItem | undefined {
   return PRODUCTS.find((p) => p.slug === slug || p.id === slug);
 }
@@ -373,12 +462,21 @@ export function getAllProducts(): ProductItem[] {
 }
 
 export function isValidProductSlug(slug: string): boolean {
-  return PRODUCTS.some((p) => p.slug === slug || p.id === slug) || slug === BUNDLE_PRODUCT.id;
+  return (
+    PRODUCTS.some((p) => p.slug === slug || p.id === slug) ||
+    slug === BUNDLE_PRODUCT.id ||
+    slug === BUNDLE_PRODUCT.slug ||
+    slug === GEMINI_PRO_PRODUCT.id ||
+    slug === GEMINI_PRO_PRODUCT.slug
+  );
 }
 
 export function getProductPrice(slug: string): number {
   if (slug === BUNDLE_PRODUCT.id || slug === BUNDLE_PRODUCT.slug) {
     return BUNDLE_PRODUCT.price;
+  }
+  if (slug === GEMINI_PRO_PRODUCT.id || slug === GEMINI_PRO_PRODUCT.slug) {
+    return GEMINI_PRO_PRODUCT.price;
   }
   const prod = getProductBySlug(slug);
   return prod ? prod.price : PRODUCTS[0].price;
@@ -387,6 +485,9 @@ export function getProductPrice(slug: string): number {
 export function getProductTitle(slug: string): string {
   if (slug === BUNDLE_PRODUCT.id || slug === BUNDLE_PRODUCT.slug) {
     return BUNDLE_PRODUCT.title;
+  }
+  if (slug === GEMINI_PRO_PRODUCT.id || slug === GEMINI_PRO_PRODUCT.slug) {
+    return GEMINI_PRO_PRODUCT.title;
   }
   const prod = getProductBySlug(slug);
   return prod ? prod.title : PRODUCTS[0].title;

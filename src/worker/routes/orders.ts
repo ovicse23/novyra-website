@@ -81,8 +81,13 @@ ordersRoute.post('/', async (c) => {
 
   // Resolve product and pricing
   let productId = 'ai-client-hunting-toolkit';
-  if (requestedProductId === 'meta-ads-blueprint' || requestedProductId === 'complete-growth-bundle') {
-    productId = requestedProductId;
+  if (
+    requestedProductId === 'meta-ads-blueprint' ||
+    requestedProductId === 'complete-growth-bundle' ||
+    requestedProductId === 'gemini-pro-18m' ||
+    requestedProductId === 'gemini-pro'
+  ) {
+    productId = requestedProductId === 'gemini-pro' ? 'gemini-pro-18m' : requestedProductId;
   }
   const amount = getProductPrice(productId);
   const productName = getProductTitle(productId);
@@ -238,12 +243,13 @@ ordersRoute.get('/:orderId', async (c) => {
   }
 
   const productName = getProductTitle(order.product_id);
+  const isSubscription = order.product_id === 'gemini-pro-18m' || order.product_id === 'gemini-pro';
 
-  // If approved and paid, prepare secure download file options
+  // If approved and paid, prepare secure download file options or subscription info
   let downloadUrl: string | undefined;
   let downloadFiles: DownloadFileItem[] = [];
 
-  if (order.status === 'paid' && order.download_token_hash) {
+  if (order.status === 'paid' && !isSubscription && order.download_token_hash) {
     downloadUrl = `/api/orders/${order.order_id}/download-access`;
 
     if (order.product_id === 'complete-growth-bundle') {
@@ -307,6 +313,17 @@ ordersRoute.get('/:orderId', async (c) => {
       download_count: order.download_count,
       max_downloads: config.maxDownloads,
       has_proof_screenshot: !!order.payment_proof_key,
+      is_subscription: isSubscription,
+      activation_instructions: isSubscription && order.status === 'paid' ? {
+        service: 'Gemini Pro 18 Months Personal',
+        email: order.email,
+        steps: [
+          'Payment has been verified! Your 18 Months Gemini Pro subscription is approved.',
+          'An official Google One family invitation has been sent directly to your registered Gmail address: ' + order.email,
+          'Click "Accept Invitation" in your email to immediately activate 5TB Cloud Storage, Gemini 3.1 Pro & 4 Argon, Veo AI, Flow, and 1,000+ monthly AI credits.',
+          'For any assistance, message our WhatsApp support at 01638002708.',
+        ],
+      } : undefined,
     },
   });
 });
@@ -320,6 +337,10 @@ ordersRoute.get('/:orderId/download-access', async (c) => {
   const order = await getOrderByOrderId(c.env.DB, orderId);
   if (!order) {
     return c.text('Order not found.', 404);
+  }
+
+  if (order.product_id === 'gemini-pro-18m' || order.product_id === 'gemini-pro') {
+    return c.text('Gemini Pro 18 Months Personal is an account subscription. An official Google One 5TB activation invitation has been sent to your registered Gmail address. Please check your inbox or spam folder.', 200);
   }
 
   if (order.status !== 'paid') {

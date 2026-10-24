@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import type { Env } from '../config.ts';
 import { getConfig } from '../config.ts';
-import { PRODUCTS, BUNDLE_PRODUCT } from '../../shared/products.ts';
+import { PRODUCTS, BUNDLE_PRODUCT, GEMINI_PRO_PRODUCT } from '../../shared/products.ts';
 
 const configRoute = new Hono<{ Bindings: Env }>();
 
@@ -40,6 +40,16 @@ configRoute.get('/', (c) => {
         regularPrice: BUNDLE_PRODUCT.regularPrice,
         pages: BUNDLE_PRODUCT.pages,
         badge: BUNDLE_PRODUCT.badge,
+      },
+      geminiPro: {
+        id: GEMINI_PRO_PRODUCT.id,
+        slug: GEMINI_PRO_PRODUCT.slug,
+        title: GEMINI_PRO_PRODUCT.title,
+        price: GEMINI_PRO_PRODUCT.price,
+        regularPrice: GEMINI_PRO_PRODUCT.regularPrice,
+        duration: GEMINI_PRO_PRODUCT.duration,
+        storage: GEMINI_PRO_PRODUCT.storage,
+        badge: GEMINI_PRO_PRODUCT.badge,
       },
     },
   });

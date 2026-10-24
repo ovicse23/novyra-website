@@ -204,7 +204,7 @@ describe('End-to-End Order & Private Download Workflow', () => {
   });
 
   it('Step 9: Validates Multi-Product Catalog and Pricing', async () => {
-    const { PRODUCTS, BUNDLE_PRODUCT, getProductBySlug, getProductPrice, getProductTitle } = await import('../../src/shared/products');
+    const { PRODUCTS, BUNDLE_PRODUCT, GEMINI_PRO_PRODUCT, getProductPrice, getProductTitle, isValidProductSlug } = await import('../../src/shared/products');
 
     expect(PRODUCTS).toHaveLength(2);
     expect(PRODUCTS[0].slug).toBe('ai-client-hunting-toolkit');
@@ -219,10 +219,20 @@ describe('End-to-End Order & Private Download Workflow', () => {
     expect(BUNDLE_PRODUCT.price).toBe(499);
     expect(BUNDLE_PRODUCT.pages).toBe(93);
 
+    // Gemini Pro 18 Months Personal
+    expect(GEMINI_PRO_PRODUCT.id).toBe('gemini-pro-18m');
+    expect(GEMINI_PRO_PRODUCT.price).toBe(1499);
+    expect(GEMINI_PRO_PRODUCT.features).toHaveLength(6);
+    expect(isValidProductSlug('gemini-pro-18m')).toBe(true);
+    expect(isValidProductSlug('gemini-pro')).toBe(true);
+
     // Helpers
     expect(getProductPrice('ai-client-hunting-toolkit')).toBe(299);
     expect(getProductPrice('meta-ads-blueprint')).toBe(299);
     expect(getProductPrice('complete-growth-bundle')).toBe(499);
+    expect(getProductPrice('gemini-pro-18m')).toBe(1499);
+    expect(getProductPrice('gemini-pro')).toBe(1499);
     expect(getProductTitle('meta-ads-blueprint')).toBe('Meta Ads Blueprint: Bangladesh Edition 2026');
+    expect(getProductTitle('gemini-pro-18m')).toBe('Gemini Pro 18 Months Personal');
   });
 });

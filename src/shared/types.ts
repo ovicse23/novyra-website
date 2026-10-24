@@ -69,6 +69,12 @@ export interface DownloadFileItem {
   download_url: string;
 }
 
+export interface SubscriptionActivationInfo {
+  service: string;
+  email: string;
+  steps: string[];
+}
+
 export interface OrderStatusResponse {
   success: boolean;
   order: {
@@ -90,6 +96,8 @@ export interface OrderStatusResponse {
     download_count?: number;
     max_downloads?: number;
     has_proof_screenshot?: boolean;
+    is_subscription?: boolean;
+    activation_instructions?: SubscriptionActivationInfo;
   };
 }
 

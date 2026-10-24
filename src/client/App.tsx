@@ -15,6 +15,7 @@ import { Disclaimer } from './components/Disclaimer';
 import { Footer } from './components/Footer';
 import { MobileStickyCta } from './components/MobileStickyCta';
 import { CheckoutModal } from './components/CheckoutModal';
+import { GeminiProSection } from './components/GeminiProSection';
 
 // Dedicated Sub-Pages
 import { OrderStatusPage } from './pages/OrderStatusPage';
@@ -22,12 +23,13 @@ import { AdminPage } from './pages/AdminPage';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPolicy } from './pages/RefundPolicy';
+import { GeminiProPage } from './pages/GeminiProPage';
 
 // Tracking & Attribution
 import { captureAndStoreUtm } from './lib/utm';
 import { initTracking, trackPageView, trackViewContent } from './lib/analytics';
 import type { ProductConfig } from '../shared/types';
-import { BUNDLE_PRODUCT } from '../shared/products';
+import { BUNDLE_PRODUCT, GEMINI_PRO_PRODUCT } from '../shared/products';
 
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -117,6 +119,25 @@ export const App: React.FC = () => {
     return <RefundPolicy />;
   }
 
+  if (pathname === '/gemini-pro' || pathname === '/gemini-ai-pro') {
+    return (
+      <>
+        <GeminiProPage
+          onOpenCheckout={(pid) => handleOpenCheckout(pid || GEMINI_PRO_PRODUCT.id)}
+          config={config}
+        />
+        <CheckoutModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          defaultProductId={selectedProductId}
+          price={config.price}
+          bkashNumber={config.bkashNumber}
+          rocketNumber={config.rocketNumber}
+        />
+      </>
+    );
+  }
+
   // Primary Landing Page View
   return (
     <div className="min-h-screen bg-background text-white selection:bg-cyan-500 selection:text-black">
@@ -133,6 +154,9 @@ export const App: React.FC = () => {
           price={config.price}
           regularPrice={config.regularPrice}
         />
+
+        {/* Gemini Pro 18 Months Featured Hot Section */}
+        <GeminiProSection onOpenCheckout={handleOpenCheckout} />
 
         {/* Product Catalog / Playbook Library */}
         <ProductCatalog

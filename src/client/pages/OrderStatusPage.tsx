@@ -8,6 +8,7 @@ import {
   Search,
   ArrowLeft,
   Layers,
+  ExternalLink,
 } from 'lucide-react';
 import { trackPurchase, trackFileDownload } from '../lib/analytics';
 
@@ -169,77 +170,131 @@ export const OrderStatusPage: React.FC = () => {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
                       Payment Verified ✓
                     </span>
-                    <h2 className="text-2xl font-black text-white">Your Toolkit Is Ready</h2>
+                    <h2 className="text-2xl font-black text-white">
+                      {order.product_id === 'gemini-pro-18m' || order.product_id === 'gemini-pro'
+                        ? 'Your Subscription Is Approved!'
+                        : 'Your Toolkit Is Ready'}
+                    </h2>
                   </div>
                 </div>
 
-                <p className="text-sm text-slate-300 mb-6 leading-relaxed">
-                  Congratulations! Your transaction has been verified. You can now download your digital copy of <strong>{order.product_name}</strong> below.
-                </p>
+                {order.product_id === 'gemini-pro-18m' || order.product_id === 'gemini-pro' ? (
+                  /* Gemini Pro 18M Activation View */
+                  <div className="space-y-5">
+                    <p className="text-sm text-slate-300 leading-relaxed">
+                      Congratulations! Your payment for <strong>Gemini Pro 18 Months Personal (5TB Cloud Storage)</strong> has been verified and processed.
+                    </p>
 
-                {/* Primary Download Buttons */}
-                <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 mb-6">
-                  {order.download_files && order.download_files.length > 0 ? (
-                    <div className="space-y-3">
-                      {order.download_files.map((file: any) => (
-                        <div
-                          key={file.id}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors"
+                    <div className="p-5 rounded-2xl bg-slate-950 border border-cyan-500/30 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">✨</span>
+                        <div>
+                          <div className="text-sm font-bold text-white">Google One &amp; Gemini Pro 18 Months Activation</div>
+                          <div className="text-xs text-cyan-400">Official Google One Family Invitation Delivered</div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2.5 pt-2 text-xs text-slate-300">
+                        <div className="flex items-start gap-2.5">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                          <span>Check your registered Gmail inbox (also check Promotions or Spam folder) for the Google One invitation email.</span>
+                        </div>
+                        <div className="flex items-start gap-2.5">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                          <span>Click <strong>&quot;Accept Invitation&quot;</strong> to link the 5TB cloud storage to your personal Google account.</span>
+                        </div>
+                        <div className="flex items-start gap-2.5">
+                          <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                          <span>Go to <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline font-semibold">gemini.google.com</a> to unlock Gemini 3.1 Pro &amp; 4 Argon, Veo AI, Flow, and NotebookLM Pro.</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                        <span className="text-slate-400">Need immediate help with activation?</span>
+                        <a
+                          href={`https://wa.me/8801638002708?text=Hello%20Novyra%20Support,%20my%20Order%20ID%20is%20${order.order_id}%20for%20Gemini%20Pro%2018M.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition-colors font-bold"
                         >
+                          <span>WhatsApp Support (01638002708)</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Standard PDF Download View */
+                  <>
+                    <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                      Congratulations! Your transaction has been verified. You can now download your digital copy of <strong>{order.product_name}</strong> below.
+                    </p>
+
+                    {/* Primary Download Buttons */}
+                    <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 mb-6">
+                      {order.download_files && order.download_files.length > 0 ? (
+                        <div className="space-y-3">
+                          {order.download_files.map((file: any) => (
+                            <div
+                              key={file.id}
+                              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition-colors"
+                            >
+                              <div>
+                                <div className="text-sm font-bold text-white">
+                                  {file.title}
+                                </div>
+                                <div className="text-xs text-slate-400 mt-0.5">
+                                  {file.pages} Pages • High Resolution Digital PDF
+                                </div>
+                              </div>
+
+                              <a
+                                href={file.download_url}
+                                onClick={() => handleDownloadClick(order.order_id)}
+                                className="inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
+                              >
+                                <Download className="w-4 h-4" />
+                                <span>Download PDF ({file.pages} Pgs)</span>
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                           <div>
                             <div className="text-sm font-bold text-white">
-                              {file.title}
+                              {order.product_name}
                             </div>
                             <div className="text-xs text-slate-400 mt-0.5">
-                              {file.pages} Pages • High Resolution Digital PDF
+                              High Resolution Digital PDF Manual
                             </div>
                           </div>
 
                           <a
-                            href={file.download_url}
+                            href={order.download_url || `/api/orders/${order.order_id}/download-access`}
                             onClick={() => handleDownloadClick(order.order_id)}
-                            className="inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
+                            className="inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-extrabold text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
                           >
                             <Download className="w-4 h-4" />
-                            <span>Download PDF ({file.pages} Pgs)</span>
+                            <span>Download PDF</span>
                           </a>
                         </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      <div>
-                        <div className="text-sm font-bold text-white">
-                          {order.product_name}
-                        </div>
-                        <div className="text-xs text-slate-400 mt-0.5">
-                          High Resolution Digital PDF Manual
-                        </div>
+                      )}
+
+                      {/* Security / Expiry Notice */}
+                      <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+                        <span className="flex items-center gap-1 text-amber-300">
+                          <Clock className="w-3.5 h-3.5" />
+                          Link expires in 72 hours
+                        </span>
+                        <span className="flex items-center gap-1 text-slate-400">
+                          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                          Downloads used: {order.download_count || 0} / {order.max_downloads || 5}
+                        </span>
                       </div>
-
-                      <a
-                        href={order.download_url || `/api/orders/${order.order_id}/download-access`}
-                        onClick={() => handleDownloadClick(order.order_id)}
-                        className="inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-extrabold text-sm text-white bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
-                      >
-                        <Download className="w-4 h-4" />
-                        <span>Download PDF</span>
-                      </a>
                     </div>
-                  )}
-
-                  {/* Security / Expiry Notice */}
-                  <div className="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
-                    <span className="flex items-center gap-1 text-amber-300">
-                      <Clock className="w-3.5 h-3.5" />
-                      Link expires in 72 hours
-                    </span>
-                    <span className="flex items-center gap-1 text-slate-400">
-                      <Layers className="w-3.5 h-3.5 text-cyan-400" />
-                      Downloads used: {order.download_count || 0} / {order.max_downloads || 5}
-                    </span>
-                  </div>
-                </div>
+                  </>
+                )}
 
                 {/* License Note */}
                 <div className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 leading-relaxed">
