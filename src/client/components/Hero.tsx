@@ -18,8 +18,8 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Background Glow Spheres */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-purple-600/20 via-blue-600/20 to-cyan-400/20 blur-[130px] rounded-full pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center max-w-3xl mx-auto">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+        <div className="text-center max-w-5xl xl:max-w-6xl mx-auto">
           {/* Small Hook Chip (100% English) */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-semibold mb-6 shadow-glow-cyan backdrop-blur-md">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* Headline (100% English) */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.15] mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.12] mb-6">
             Stop Relying on Luck. <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
               Build Predictable Revenue Systems.
@@ -35,31 +35,31 @@ export const Hero: React.FC<HeroProps> = ({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
+          <p className="text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl lg:max-w-4xl mx-auto mb-8">
             Master high-ticket international client acquisition and hyper-profitable Meta advertising with Novyra's condensed, execution-ready PDF manuals. Zero fluff, 100% battle-tested blueprints.
           </p>
 
           {/* Trust / Value Chips */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-2xl mx-auto mb-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
+          <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 max-w-4xl lg:max-w-5xl mx-auto mb-10">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
               <BookOpen className="w-4 h-4 text-cyan-400" /> 2 Complete Playbooks
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
               <Bot className="w-4 h-4 text-blue-400" /> AI Prompts &amp; Outbound Sourcing
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
               <TrendingUp className="w-4 h-4 text-purple-400" /> 20 Bangla Hooks &amp; COD Math
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Battle-Tested Templates
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs sm:text-sm text-slate-300">
               <Shield className="w-4 h-4 text-cyan-400" /> Instant Digital Access
             </span>
           </div>
 
           {/* Dual CTAs: Bundle or Individual */}
-          <div className="w-full max-w-xl sm:max-w-2xl mx-auto space-y-4 mb-6">
+          <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto space-y-4 mb-6">
             <div className="relative group">
               {/* Logo-inspired ambient glow matching Cyan -> Electric Blue -> Violet */}
               <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 via-blue-600 to-purple-600 rounded-2xl blur-lg opacity-75 group-hover:opacity-100 group-hover:blur-xl transition-all duration-300 pointer-events-none" />
@@ -105,7 +105,7 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Product Mockup Visual Showcase (Both Books) */}
-        <div className="mt-14 max-w-4xl mx-auto relative">
+        <div className="mt-16 max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto relative">
           <div className="relative mx-auto rounded-2xl p-2 sm:p-5 bg-gradient-to-b from-slate-800/60 to-slate-950/80 border border-slate-700/60 shadow-2xl backdrop-blur-md">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center p-4 sm:p-6">
               {/* Left Dual Books Graphic */}

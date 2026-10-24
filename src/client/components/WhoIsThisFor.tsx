@@ -18,8 +18,8 @@ export const WhoIsThisFor: React.FC = () => {
 
   return (
     <section className="py-24 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-14">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-4xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-4">
             <Users className="w-3.5 h-3.5" />
             Target Audience
@@ -33,7 +33,7 @@ export const WhoIsThisFor: React.FC = () => {
         </div>
 
         {/* Roles Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5 max-w-4xl mx-auto mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5 max-w-5xl lg:max-w-6xl mx-auto mb-12">
           {roles.map((r, i) => (
             <div
               key={i}
@@ -55,7 +55,7 @@ export const WhoIsThisFor: React.FC = () => {
         </div>
 
         {/* Reassurance Banner */}
-        <div className="max-w-2xl mx-auto text-center p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs sm:text-sm text-slate-300">
+        <div className="max-w-3xl lg:max-w-4xl mx-auto text-center p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs sm:text-sm text-slate-300">
           💡 <span className="font-semibold text-white">Notice:</span> This is not for people looking for passive income or get-rich-quick methods. This toolkit is for dedicated freelancers ready to implement a systematic outreach workflow.
         </div>
       </div>

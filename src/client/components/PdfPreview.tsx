@@ -39,9 +39,9 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ onOpenCheckout, price: _
 
   return (
     <section id="preview" className="py-24 bg-background-alt border-t border-white/5 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-4xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-4">
             <Eye className="w-3.5 h-3.5" />
             <span>Real Inside Look</span>
@@ -103,9 +103,9 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ onOpenCheckout, price: _
         </div>
 
         {/* Active Preview Showcase */}
-        <div className="max-w-3xl mx-auto mb-12">
+        <div className="max-w-4xl lg:max-w-5xl mx-auto mb-14">
           <div className="relative rounded-2xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-950 p-2 sm:p-4">
-            <div className="relative aspect-[600/840] max-h-[620px] mx-auto overflow-hidden rounded-xl bg-slate-900 flex items-center justify-center">
+            <div className="relative aspect-[600/840] max-h-[700px] mx-auto overflow-hidden rounded-xl bg-slate-900 flex items-center justify-center">
               <img
                 src={activePreviews[selectedIdx].file}
                 alt={`Preview of ${activePreviews[selectedIdx].title}`}
@@ -130,7 +130,7 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({ onOpenCheckout, price: _
         </div>
 
         {/* Thumbnail Grid for other pages */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-4xl mx-auto mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl lg:max-w-6xl mx-auto mb-12">
           {activePreviews.map((p, idx) => (
             <div
               key={p.num}

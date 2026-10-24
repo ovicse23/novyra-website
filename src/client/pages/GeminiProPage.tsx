@@ -65,7 +65,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
     <div className="min-h-screen bg-background text-white selection:bg-cyan-500 selection:text-black">
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 w-full glass-panel border-b border-white/10 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
           <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Novyra Home">
             <img
               src="/assets/logo.png?v=3"
@@ -74,7 +74,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
             />
           </a>
 
-          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium text-slate-300">
             <a href="#features" className="hover:text-cyan-400 transition-colors">ফিচারসমূহ</a>
             <a href="#storage" className="hover:text-cyan-400 transition-colors">৫TB স্টোরেজ</a>
             <a href="#compare" className="hover:text-cyan-400 transition-colors">কম্প্যারিজন</a>
@@ -91,7 +91,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
           >
             <Sparkles className="w-4 h-4 text-cyan-200" />
-            <span>অর্ডার করুন — ৳১,৪৯৯</span>
+            <span>অর্ডার করুন — ৳৩৯৯</span>
           </button>
         </div>
       </header>
@@ -102,7 +102,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
           {/* Subtle cosmic glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-b from-cyan-500/15 via-purple-500/10 to-transparent blur-[140px] pointer-events-none" />
 
-          <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="max-w-6xl lg:max-w-7xl mx-auto text-center relative z-10">
             {/* Hot Item Pill */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/20 via-purple-500/20 to-cyan-500/20 border border-rose-500/40 text-rose-300 text-xs sm:text-sm font-black uppercase tracking-wider mb-6 shadow-xl shadow-rose-500/10">
               <span className="relative flex h-2 w-2">
@@ -112,20 +112,20 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
               <span>🔥 ১৮ মাসের মেগা স্পেশাল অফার • GOOGLE AI SUITE</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight">
               Gemini Pro 18 Months Personal
             </h1>
 
-            <p className="mt-5 text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-300 via-blue-200 to-purple-300 bg-clip-text text-transparent max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-5 text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-300 via-blue-200 to-purple-300 bg-clip-text text-transparent max-w-4xl mx-auto leading-relaxed">
               একটি সাবস্ক্রিপশনেই আনলক করুন গুগল-এর সকল পাওয়ারফুল এআই টুলস ও ক্লাউড স্টোরেজ
             </p>
 
-            <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-4 text-sm sm:text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Google-এর ফ্ল্যাগশিপ মডেল Gemini 3.1 Pro &amp; 4 Argon, সাথে বিশাল ৫TB গুগল ওয়ান ক্লাউড স্টোরেজ, Veo সিনেম্যাটিক ভিডিও এবং Flow AI ফিল্মমেকিং — সরাসরি আপনার পার্সোনাল জিমেইলে।
             </p>
 
             {/* Key Metric Chips */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 max-w-4xl mx-auto">
               <span className="px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-xs font-bold text-cyan-300 flex items-center gap-1.5">
                 <Cloud className="w-3.5 h-3.5 text-cyan-400" />
                 ৫TB গুগল ক্লাউড স্টোরেজ
@@ -145,17 +145,17 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
             </div>
 
             {/* Price Box & CTA */}
-            <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-cyan-500/30 max-w-xl mx-auto shadow-2xl backdrop-blur-md">
+            <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-cyan-500/30 max-w-2xl mx-auto shadow-2xl backdrop-blur-md">
               <div className="flex items-center justify-center gap-4">
                 <div className="text-4xl sm:text-5xl font-black text-cyan-300">
-                  ৳১,৪৯৯
+                  ৳৩৯৯
                 </div>
                 <div className="text-left">
                   <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                     ১৮ মাস সম্পূর্ণ সাবস্ক্রিপশন
                   </div>
                   <div className="text-sm text-slate-500 line-through">
-                    রেগুলার: ৳৪,৯৯৯ (৭০% স্পেশাল ছাড়)
+                    রেগুলার: ৳১,৪৯৯ (৭৩% স্পেশাল ছাড়)
                   </div>
                 </div>
               </div>
@@ -166,7 +166,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                   className="flex-1 py-4 px-6 rounded-2xl font-black text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/30 active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-5 h-5 text-cyan-200 animate-pulse" />
-                  <span>এখনই সাবস্ক্রিপশন নিন — ৳১,৪৯৯</span>
+                  <span>এখনই সাবস্ক্রিপশন নিন — ৳৩৯৯</span>
                 </button>
               </div>
 
@@ -189,8 +189,8 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
         {/* 6 CORE FEATURES DEEP-DIVE */}
         <section id="features" className="py-20 px-4 sm:px-6 bg-slate-950 border-t border-slate-800">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
+            <div className="text-center max-w-4xl mx-auto mb-16">
               <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 WHAT YOU GET IN GEMINI PRO 18M
               </span>
@@ -364,7 +364,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
         {/* COMPARISON TABLE */}
         <section id="compare" className="py-20 px-4 sm:px-6 bg-slate-900/60 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl lg:max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 HEAD-TO-HEAD COMPARISON
@@ -434,7 +434,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
         {/* HOW TO ACTIVATE (3 SIMPLE STEPS) */}
         <section id="how-it-works" className="py-20 px-4 sm:px-6 bg-slate-950 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl lg:max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 EASY 3-STEP PROCESS
@@ -454,7 +454,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                 </div>
                 <h3 className="text-lg font-black text-white mb-2">অর্ডার দিন</h3>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  আপনার নাম, জিমেইল অ্যাড্রেস ও মোবাইল নাম্বার দিয়ে বিকাশ বা রকেটে ৳১,৪৯৯ টাকা সেন্ড মানি করুন।
+                  আপনার নাম, জিমেইল অ্যাড্রেস ও মোবাইল নাম্বার দিয়ে বিকাশ বা রকেটে ৳৩৯৯ টাকা সেন্ড মানি করুন।
                 </p>
               </div>
 
@@ -483,7 +483,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
         {/* FAQ ACCORDION */}
         <section id="faq" className="py-20 px-4 sm:px-6 bg-slate-900/60 border-t border-slate-800">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 FREQUENTLY ASKED QUESTIONS
@@ -523,16 +523,16 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
 
         {/* FINAL HIGH-CONVERTING CTA BANNER */}
         <section className="py-20 px-4 sm:px-6 relative overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950 border-t border-slate-800">
-          <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="max-w-5xl lg:max-w-6xl mx-auto text-center relative z-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold mb-4">
               <Sparkles className="w-3.5 h-3.5" />
               <span>লিমিটেড স্টক অফার • আজই আনলক করুন</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
               আজই পান Gemini Pro 18 Months Personal
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-xl mx-auto">
+            <p className="mt-4 text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl sm:max-w-3xl mx-auto">
               ৫TB ক্লাউড স্টোরেজ, Gemini 3.1 Pro &amp; 4 Argon, Veo AI ও NotebookLM Pro সহ সম্পূর্ণ গুগল এআই প্যাকেজ।
             </p>
 
@@ -542,7 +542,7 @@ export const GeminiProPage: React.FC<GeminiProPageProps> = ({ onOpenCheckout, co
                 className="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-base text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-2xl shadow-cyan-500/30 active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-5 h-5 text-cyan-200" />
-                <span>সাবস্ক্রিপশন নিন — মাত্র ৳১,৪৯৯</span>
+                <span>সাবস্ক্রিপশন নিন — মাত্র ৳৩৯৯</span>
               </button>
 
               <a

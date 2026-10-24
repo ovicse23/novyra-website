@@ -50,8 +50,8 @@ export const FaqSection: React.FC = () => {
 
   return (
     <section id="faq" className="py-24 bg-background-alt border-y border-white/5 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+      <div className="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Frequently Asked Questions</span>

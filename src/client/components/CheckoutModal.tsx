@@ -290,8 +290,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-sm sm:text-base font-black text-cyan-300">৳1,499</div>
-                  <div className="text-[10px] text-slate-500 line-through">৳4,999</div>
+                  <div className="text-sm sm:text-base font-black text-cyan-300">৳399</div>
+                  <div className="text-[10px] text-slate-500 line-through">৳1,499</div>
                 </div>
               </button>
 

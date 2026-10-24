@@ -9,7 +9,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onOpenCheckout }) => {
   return (
     <header className="sticky top-0 z-40 w-full glass-panel border-b border-white/10 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Novyra Home">
           <img
@@ -20,7 +20,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenCheckout }) => {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300" aria-label="Main Navigation">
+        <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium text-slate-300" aria-label="Main Navigation">
           {/* Gemini Pro 18M with Hot Item Animated Highlight */}
           <a
             href="/gemini-pro"

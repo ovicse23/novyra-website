@@ -18,7 +18,7 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 -translate-y-1/2 w-96 h-96 bg-purple-500/15 rounded-full blur-[130px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         {/* Top Highlight Badge */}
         <div className="flex flex-col items-center text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/15 via-purple-500/15 to-cyan-500/15 border border-rose-500/30 text-rose-300 text-xs sm:text-sm font-black uppercase tracking-wider mb-4 shadow-lg shadow-rose-500/10 animate-pulse">
@@ -29,15 +29,15 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
             <span>🔥 HOT NEW ITEM • GOOGLE FLAGSHIP AI ECOSYSTEM</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight max-w-3xl leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight max-w-4xl xl:max-w-5xl leading-tight">
             কি কি পাচ্ছেন <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">Gemini Pro 18 Months Personal</span>-তে
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl lg:max-w-4xl font-medium leading-relaxed">
             একটি সাবস্ক্রিপশনেই আনলক করুন গুগল-এর সকল পাওয়ারফুল এআই টুলস ও ক্লাউড স্টোরেজ
           </p>
 
-          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-semibold">
+            <ShieldCheck className="w-4 h-4 text-cyan-400" />
             <span>১০০% পার্সোনাল জিমেইল অ্যাকাউন্টে অফিসিয়াল এক্টিভেশন • ১৮ মাস গ্যারান্টি</span>
           </div>
         </div>
@@ -194,11 +194,11 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
               <div className="text-left sm:text-right pr-2">
-                <div className="text-2xl sm:text-3xl font-black text-cyan-300">
-                  ৳১,৪৯৯ <span className="text-xs font-medium text-slate-400">/ ১৮ মাস</span>
+                <div className="text-3xl sm:text-4xl font-black text-cyan-300">
+                  ৳৩৯৯ <span className="text-xs font-medium text-slate-400">/ ১৮ মাস</span>
                 </div>
                 <div className="text-xs text-slate-500 line-through">
-                  রেগুলার মূল্য: ৳৪,৯৯৯ (৭০% ছাড়)
+                  রেগুলার মূল্য: ৳১,৪৯৯ (৭৩% ছাড়)
                 </div>
               </div>
 
@@ -208,7 +208,7 @@ export const GeminiProSection: React.FC<GeminiProSectionProps> = ({ onOpenChecko
                   className="px-6 py-3.5 rounded-xl font-black text-sm text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 shadow-xl shadow-cyan-500/25 active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4 text-cyan-200" />
-                  <span>এখনই অর্ডার করুন — ৳১,৪৯৯</span>
+                  <span>এখনই অর্ডার করুন — ৳৩৯৯</span>
                 </button>
 
                 <a

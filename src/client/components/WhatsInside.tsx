@@ -172,9 +172,9 @@ export const WhatsInside: React.FC = () => {
 
   return (
     <section id="curriculum" className="py-20 sm:py-28 relative overflow-hidden bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-4xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
             <span>Execution Curriculum</span>
           </div>

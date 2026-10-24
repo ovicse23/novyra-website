@@ -44,8 +44,8 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenCheckout, price = 
 
   return (
     <section id="how-it-works" className="py-24 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
             Simple 4-Step Process
           </div>
@@ -93,7 +93,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenCheckout, price = 
         </div>
 
         {/* Security Reassurance Callout */}
-        <div className="glass-panel max-w-2xl mx-auto p-5 rounded-xl border-amber-500/20 flex items-center gap-4 text-xs text-slate-300 mb-8">
+        <div className="glass-panel max-w-4xl lg:max-w-5xl mx-auto p-5 rounded-2xl border-amber-500/20 flex items-center gap-4 text-xs sm:text-sm text-slate-300 mb-8">
           <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 font-bold">
             🛡️
           </div>

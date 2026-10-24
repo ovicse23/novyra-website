@@ -40,14 +40,14 @@ export const ProblemSection: React.FC = () => {
 
   return (
     <section className="py-20 bg-background-alt border-y border-white/5 relative">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl lg:max-w-[1440px] xl:max-w-[1600px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-4xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold uppercase tracking-wider mb-4">
             <AlertCircle className="w-3.5 h-3.5" />
             <span>The Real Market Bottleneck</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
             Having Skills Isn't Enough. You Need a Repeatable Growth Engine.
           </h2>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
@@ -57,7 +57,7 @@ export const ProblemSection: React.FC = () => {
             {learnedSkills.map((skill) => (
               <span
                 key={skill}
-                className="px-3 py-1 rounded-md bg-slate-800/80 text-xs font-semibold text-slate-300 border border-slate-700/50"
+                className="px-3.5 py-1.5 rounded-lg bg-slate-800/80 text-xs sm:text-sm font-semibold text-slate-300 border border-slate-700/50"
               >
                 {skill}
               </span>
@@ -69,25 +69,25 @@ export const ProblemSection: React.FC = () => {
         </div>
 
         {/* Pain Points Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto mb-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl lg:max-w-6xl mx-auto mb-16">
           {painPoints.map((pain, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-xl bg-slate-900/60 border border-rose-500/15 flex items-start gap-3.5"
+              className="p-5 rounded-2xl bg-slate-900/60 border border-rose-500/15 flex items-start gap-4"
             >
-              <div className="w-6 h-6 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-7 h-7 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5">
                 <span className="text-rose-400 text-xs font-bold">✕</span>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white mb-1">{pain.title}</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">{pain.desc}</p>
+                <h4 className="text-sm sm:text-base font-bold text-white mb-1.5">{pain.title}</h4>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{pain.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
         {/* The Solution Transition Box */}
-        <div className="glass-panel max-w-3xl mx-auto p-6 sm:p-8 rounded-2xl border-cyan-500/20 text-center relative overflow-hidden">
+        <div className="glass-panel max-w-4xl lg:max-w-5xl mx-auto p-7 sm:p-10 rounded-3xl border-cyan-500/20 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-2xl rounded-full" />
           <div className="relative z-10">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/20">
@@ -96,7 +96,7 @@ export const ProblemSection: React.FC = () => {
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Novyra Playbooks Replace Guesswork with Systematic Execution
             </h3>
-            <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
               Instead of relying on hope or random luck, deploy structured outbound pipelines, high-converting copy angles, and rigorous unit margin math to build sustainable revenue.
             </p>
           </div>

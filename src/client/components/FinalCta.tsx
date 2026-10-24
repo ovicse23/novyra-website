@@ -14,25 +14,25 @@ export const FinalCta: React.FC<FinalCtaProps> = ({ onOpenCheckout }) => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/20 to-purple-950/20 pointer-events-none" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+      <div className="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 relative z-10 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-bold mb-6">
           <Sparkles className="w-4 h-4 text-cyan-400" />
           <span>Ready To Take Control Of Your Growth?</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-4">
+        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
           Stop Guessing. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
             Start Executing Systems That Scale.
           </span>
         </h2>
 
-        <p className="text-base sm:text-xl text-slate-300 max-w-xl mx-auto mb-8">
+        <p className="text-base sm:text-xl text-slate-300 max-w-2xl sm:max-w-3xl mx-auto mb-8">
           Get lifetime digital access to Novyra playbooks today with instant manual bKash or Rocket payment.
         </p>
 
         {/* Pricing & CTA */}
-        <div className="w-full max-w-xl sm:max-w-2xl mx-auto space-y-4 mb-6">
+        <div className="w-full max-w-2xl sm:max-w-3xl mx-auto space-y-4 mb-6">
           <div className="relative group">
             {/* Logo-themed ambient glow matching Cyan -> Electric Blue -> Purple */}
             <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-400 via-blue-600 to-purple-600 rounded-2xl blur-lg opacity-75 group-hover:opacity-100 group-hover:blur-xl transition-all duration-300 pointer-events-none" />
